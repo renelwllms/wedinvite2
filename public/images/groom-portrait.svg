@@ -1,0 +1,8 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1125" fill="#E7D7C7"/>
+  <rect x="70" y="70" width="760" height="985" rx="48" fill="#F8F3ED"/>
+  <circle cx="450" cy="345" r="140" fill="#D0B5A0"/>
+  <rect x="260" y="515" width="380" height="380" rx="190" fill="#8B6A59"/>
+  <path d="M250 930C330 825 395 785 450 785C505 785 570 825 650 930" stroke="#B78B4A" stroke-width="12" stroke-linecap="round"/>
+  <text x="450" y="1010" fill="#6E5447" font-size="42" text-anchor="middle" font-family="serif">Replace with groom photo</text>
+</svg>
