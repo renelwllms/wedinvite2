@@ -22,15 +22,22 @@ export function OpeningScreen({ guestName, data, isOpen, onOpen }: OpeningScreen
           exit={{ opacity: 0, scale: 1.02 }}
           transition={{ duration: 0.65 }}
         >
-          <Image src={data.hero.coverImage} alt="Invitation cover" fill priority className="object-cover opacity-55" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-[#241714]/85" />
+          <motion.div
+            initial={{ scale: 1.05, opacity: 0.35 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0"
+          >
+            <Image src={data.hero.coverImage} alt="Invitation cover" fill priority className="object-cover opacity-70" />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/28 to-[#241714]/72" />
           <div className="absolute -left-12 top-16 h-48 w-48 rounded-full bg-champagne/20 blur-3xl" />
           <div className="absolute bottom-16 right-0 h-56 w-56 rounded-full bg-rose/20 blur-3xl" />
 
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2 }}
+            initial={{ opacity: 0, y: 36, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.9, delay: 1.15, ease: [0.22, 1, 0.36, 1] }}
             className="relative mx-6 w-full max-w-md rounded-[2rem] border border-white/15 bg-white/10 p-8 text-center text-white shadow-2xl backdrop-blur-xl"
           >
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10">

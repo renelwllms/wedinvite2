@@ -82,6 +82,7 @@ export type InvitationData = {
     thankYou: string;
     familyGreeting: string;
     footerCredit: string;
+    footerCreditUrl?: string;
   };
 };
 
@@ -152,6 +153,13 @@ export const invitationData: InvitationData = {
       image: "/images/story-meeting.jpg"
     },
     {
+      year: "2024",
+      title: "Our Engagement",
+      description:
+        "On 7 December 2024, we celebrated a beautiful promise for the future and took one more step toward forever.",
+      image: "/images/story-engagement.jpg"
+    },
+    {
       year: "2025",
       title: "First Movie Together",
       description:
@@ -163,7 +171,7 @@ export const invitationData: InvitationData = {
       title: "Our Wedding Day",
       description:
         "On June 10, 2026, we begin our marriage surrounded by the love and prayers of the people who matter most.",
-      image: "/images/renel-della-cover.jpg"
+      image: "/images/story-wedding-day.jpg"
     }
   ],
   gallery: [
@@ -207,6 +215,7 @@ export const invitationData: InvitationData = {
     thankYou:
       "Thank you for being part of our story and for surrounding Renel and Della with your love, prayers, and blessings.",
     familyGreeting: "With love from Della, Renel, and our families.",
-    footerCredit: "Premium invitation template by your studio."
+    footerCredit: "Premium invitation template by Edgepoint Ltd.",
+    footerCreditUrl: "https://edgepoint.co.nz"
   }
 };

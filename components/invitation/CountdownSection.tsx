@@ -2,17 +2,35 @@
 
 import { useEffect, useState } from "react";
 
-import type { InvitationData } from "@/data/invitation";
-import { getCountdown } from "@/lib/countdown";
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
 import { SectionContainer } from "@/components/invitation/SectionContainer";
+import type { InvitationData } from "@/data/invitation";
+import { getCountdown, type CountdownState } from "@/lib/countdown";
 
-const labels: Array<keyof ReturnType<typeof getCountdown>> = ["days", "hours", "minutes", "seconds"];
+const labels: Array<keyof Pick<CountdownState, "days" | "hours" | "minutes" | "seconds">> = [
+  "days",
+  "hours",
+  "minutes",
+  "seconds"
+];
+
+const initialCountdown: CountdownState = {
+  total: 0,
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  expired: false
+};
 
 export function CountdownSection({ data }: { data: InvitationData }) {
-  const [countdown, setCountdown] = useState(() => getCountdown(data.weddingDateISO));
+  const [countdown, setCountdown] = useState<CountdownState>(initialCountdown);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true);
+    setCountdown(getCountdown(data.weddingDateISO));
+
     const interval = window.setInterval(() => {
       setCountdown(getCountdown(data.weddingDateISO));
     }, 1000);
@@ -30,7 +48,7 @@ export function CountdownSection({ data }: { data: InvitationData }) {
     >
       <AnimatedReveal>
         <div className="glass-panel rounded-[2rem] border border-white/40 p-6 shadow-soft sm:p-10">
-          {countdown.expired ? (
+          {hasMounted && countdown.expired ? (
             <div className="text-center">
               <p className="font-display text-4xl text-cocoa">Today is the day</p>
               <p className="mt-4 text-cocoa/75">The celebration has begun. Thank you for being part of our story.</p>

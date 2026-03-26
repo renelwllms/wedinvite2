@@ -1,5 +1,5 @@
-import type { InvitationData } from "@/data/invitation";
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
+import type { InvitationData } from "@/data/invitation";
 
 export function ClosingSection({ data }: { data: InvitationData }) {
   return (
@@ -14,7 +14,18 @@ export function ClosingSection({ data }: { data: InvitationData }) {
             {data.closing.thankYou}
           </p>
           <p className="mt-8 text-sm uppercase tracking-[0.3em] text-champagne/70">{data.closing.familyGreeting}</p>
-          <p className="mt-10 text-xs uppercase tracking-[0.3em] text-white/40">{data.closing.footerCredit}</p>
+          {data.closing.footerCreditUrl ? (
+            <a
+              href={data.closing.footerCreditUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-10 inline-block text-xs uppercase tracking-[0.3em] text-white/50 transition hover:text-champagne"
+            >
+              {data.closing.footerCredit}
+            </a>
+          ) : (
+            <p className="mt-10 text-xs uppercase tracking-[0.3em] text-white/40">{data.closing.footerCredit}</p>
+          )}
         </div>
       </AnimatedReveal>
     </section>
