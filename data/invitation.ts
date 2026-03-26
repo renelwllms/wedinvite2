@@ -181,7 +181,10 @@ export const invitationData: InvitationData = {
     "/images/gallery-4.jpg",
     "/images/gallery-5.jpg",
     "/images/gallery-6.jpg",
-    "/images/gallery-7.jpg"
+    "/images/gallery-7.jpg",
+    "/images/gallery-8.jpg",
+    "/images/gallery-9.jpg",
+    "/images/gallery-10.jpg"
   ],
   gifts: {
     intro:
@@ -190,8 +193,8 @@ export const invitationData: InvitationData = {
     photoRequestEmail: "info@edgepoint.co.nz"
   },
   music: {
-    src: "/audio/replace-with-your-track.mp3",
-    title: "Replace with your licensed wedding track"
+    src: "/audio/music.mp3",
+    title: "Wedding background music"
   },
   seededWishes: [
     {
