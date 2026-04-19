@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowDownRight } from "lucide-react";
+import { ArrowDownRight, MapPinned } from "lucide-react";
 
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
 import type { InvitationData } from "@/data/invitation";
@@ -57,22 +57,34 @@ export function HeroSection({ data }: { data: InvitationData }) {
 
           <div className="mt-8 max-w-3xl rounded-[2rem] border border-white/35 bg-[rgba(255,248,241,0.78)] p-5 shadow-[0_24px_56px_rgba(28,20,17,0.14)] backdrop-blur-xl sm:p-6 lg:mt-10 lg:max-w-[42rem]">
             <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/65">{data.saveDate.eyebrow}</p>
-            <div className="mt-3 flex flex-wrap items-end gap-3">
-              <p className="font-display text-4xl font-semibold leading-none text-cocoa sm:text-5xl">{data.saveDate.title}</p>
-              <p className="pb-1 text-sm uppercase tracking-[0.28em] text-taupe/70">{data.hero.dateLabel}</p>
+            <div className="mt-4 space-y-4 text-cocoa">
+              <p className="font-display text-3xl font-semibold leading-tight sm:text-4xl">{data.hero.title}</p>
+              <div className="space-y-1">
+                <p className="font-display text-3xl leading-tight sm:text-4xl">{data.couple.bride.fullName}</p>
+                <p className="font-display text-2xl leading-none text-[#b89363] sm:text-3xl">&amp;</p>
+                <p className="font-display text-3xl leading-tight sm:text-4xl">{data.couple.groom.fullName}</p>
+              </div>
             </div>
-            <p className="mt-4 max-w-2xl text-sm uppercase tracking-[0.22em] text-taupe/72 sm:text-base">{data.saveDate.venue}</p>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-taupe/82">{data.saveDate.location}</p>
-
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-[1.35rem] bg-white/72 px-4 py-4">
-                <p className="text-[0.68rem] uppercase tracking-[0.34em] text-taupe/52">{heroCopy.ceremonyLabel}</p>
-                <p className="mt-2 text-base font-medium text-cocoa">{data.events[0]?.timeLabel}</p>
-              </div>
-              <div className="rounded-[1.35rem] bg-white/72 px-4 py-4">
-                <p className="text-[0.68rem] uppercase tracking-[0.34em] text-taupe/52">{heroCopy.receptionLabel}</p>
-                <p className="mt-2 text-base font-medium text-cocoa">{data.events[1]?.timeLabel}</p>
-              </div>
+            <div className="mt-6 space-y-3 rounded-[1.5rem] bg-white/72 px-4 py-5 sm:px-5">
+              <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">On</p>
+              <p className="font-display text-3xl font-semibold leading-none text-cocoa sm:text-4xl">{data.saveDate.title}</p>
+              <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">At</p>
+              <p className="text-lg font-medium text-cocoa sm:text-xl">{data.events[0]?.timeLabel}</p>
+              <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">Location</p>
+              <p className="text-base leading-7 text-taupe/82">{data.events[0]?.address}</p>
+              {data.events[0]?.mapsUrl ? (
+                <div className="pt-2">
+                  <a
+                    href={data.events[0].mapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-cocoa px-4 py-2 text-sm font-medium text-white transition hover:bg-[#3a2a24]"
+                  >
+                    <MapPinned className="h-4 w-4" />
+                    Open Location
+                  </a>
+                </div>
+              ) : null}
             </div>
           </div>
         </AnimatedReveal>
