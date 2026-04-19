@@ -18,6 +18,8 @@
 html,
 body {
   min-height: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -36,6 +38,7 @@ body[data-scroll-locked="true"] {
 
 * {
   box-sizing: border-box;
+  min-width: 0;
 }
 
 a {

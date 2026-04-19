@@ -18,29 +18,38 @@ export function HeroSection({ data }: { data: InvitationData }) {
         alt={`${data.hero.brideName} and ${data.hero.groomName}`}
         fill
         priority
-        className="object-cover object-center opacity-[0.46]"
+        className="object-cover object-center opacity-[0.38] sm:opacity-[0.42]"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,19,16,0.88)_0%,rgba(35,26,22,0.76)_34%,rgba(55,41,34,0.46)_60%,rgba(247,240,232,0.08)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(30,22,18,0.28)_0%,rgba(52,38,31,0.18)_42%,rgba(247,240,232,0.8)_78%,rgba(247,240,232,1)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(20,14,12,0.94)_0%,rgba(31,23,19,0.88)_36%,rgba(49,37,31,0.58)_62%,rgba(247,240,232,0.14)_100%)] sm:bg-[linear-gradient(90deg,rgba(24,17,14,0.9)_0%,rgba(34,25,21,0.78)_34%,rgba(55,41,34,0.48)_60%,rgba(247,240,232,0.1)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_46%,rgba(18,12,10,0.54)_0%,rgba(18,12,10,0.36)_24%,rgba(18,12,10,0)_58%)] sm:bg-[radial-gradient(circle_at_28%_44%,rgba(20,13,11,0.38)_0%,rgba(20,13,11,0.22)_24%,rgba(20,13,11,0)_56%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(26,18,15,0.28)_0%,rgba(40,28,23,0.26)_46%,rgba(247,240,232,0.84)_80%,rgba(247,240,232,1)_100%)]" />
       <div className="ornament-blur left-[-2rem] top-24 h-52 w-52 bg-white/50" />
       <div className="ornament-blur right-[-3rem] top-32 h-72 w-72 bg-champagne/35" />
 
       <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:items-end">
-        <AnimatedReveal className="max-w-3xl pt-10 sm:pt-16">
-          <p className="text-sm uppercase tracking-[0.4em] text-taupe/70">{data.hero.familyLine}</p>
+        <AnimatedReveal className="max-w-3xl rounded-[2rem] bg-[linear-gradient(180deg,rgba(24,17,14,0.18),rgba(24,17,14,0.08))] px-2 py-5 sm:bg-transparent sm:px-0 sm:py-0 sm:pt-16">
+          <p className="text-sm uppercase tracking-[0.4em] text-white/78 drop-shadow-[0_3px_18px_rgba(8,6,5,0.45)] sm:text-white/72">
+            {data.hero.familyLine}
+          </p>
           {data.hero.scriptAccent ? (
-            <p className="mt-6 font-script text-4xl text-sand sm:text-5xl">{data.hero.scriptAccent}</p>
+            <p className="mt-6 font-script text-4xl text-[#efd19a] drop-shadow-[0_5px_18px_rgba(12,8,6,0.4)] sm:text-5xl">
+              {data.hero.scriptAccent}
+            </p>
           ) : null}
           <h1 className="mt-2 text-balance font-display text-6xl font-semibold leading-[0.88] tracking-[-0.05em] text-white drop-shadow-[0_10px_32px_rgba(30,22,18,0.25)] sm:text-7xl lg:text-[7rem]">
             {data.hero.brideName}
             <span className="mx-2 inline-block text-4xl text-champagne sm:text-5xl lg:text-6xl">&amp;</span>
             {data.hero.groomName}
           </h1>
-          <p className="mt-6 max-w-xl text-balance text-sm uppercase tracking-[0.34em] text-white/78 sm:text-base">
+          <p className="mt-6 max-w-xl text-balance text-sm uppercase tracking-[0.34em] text-white/92 drop-shadow-[0_4px_20px_rgba(8,6,5,0.5)] sm:text-base sm:text-white/82">
             {data.hero.invitationLine}
           </p>
-          <p className="mt-8 max-w-2xl text-balance font-display text-2xl italic text-white/88 sm:text-3xl">{data.hero.quote}</p>
-          <p className="mt-6 max-w-xl text-base leading-8 text-white/74 sm:text-lg">{data.hero.blessing}</p>
+          <p className="mt-8 max-w-2xl text-balance font-display text-2xl italic text-white/95 drop-shadow-[0_5px_22px_rgba(8,6,5,0.52)] sm:text-3xl sm:text-white/90">
+            {data.hero.quote}
+          </p>
+          <p className="mt-6 max-w-xl text-base leading-8 text-white/88 drop-shadow-[0_4px_20px_rgba(8,6,5,0.5)] sm:text-lg sm:text-white/78">
+            {data.hero.blessing}
+          </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href="#intro"
@@ -49,7 +58,9 @@ export function HeroSection({ data }: { data: InvitationData }) {
               {heroCopy.openInvitationCta}
               <ArrowDownRight className="h-4 w-4" />
             </a>
-            <p className="text-sm uppercase tracking-[0.28em] text-white/72">{data.hero.dateLabel}</p>
+            <p className="text-sm uppercase tracking-[0.28em] text-white/84 drop-shadow-[0_4px_16px_rgba(8,6,5,0.42)] sm:text-white/72">
+              {data.hero.dateLabel}
+            </p>
           </div>
         </AnimatedReveal>
 

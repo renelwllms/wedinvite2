@@ -52,14 +52,14 @@ export function TopNavbar({ coupleLabel, labels }: TopNavbarProps) {
             "mx-auto flex max-w-6xl items-center justify-between rounded-full border px-4 py-3 transition-all duration-300 sm:px-6",
             scrolled
               ? "border-white/50 bg-[#f7f0e8]/88 shadow-panel backdrop-blur-xl"
-              : "border-white/25 bg-white/35 backdrop-blur-md"
+              : "border-white/35 bg-[rgba(255,250,244,0.58)] shadow-[0_8px_24px_rgba(32,22,18,0.12)] backdrop-blur-lg sm:bg-white/35 sm:shadow-none sm:backdrop-blur-md"
           )}
         >
           <a href="#home" className="min-w-0">
             <p className="truncate font-display text-xl font-semibold tracking-[0.02em] text-cocoa sm:text-2xl">
               {coupleLabel}
             </p>
-            <p className="mt-0.5 text-[0.62rem] uppercase tracking-[0.34em] text-taupe/65 sm:text-[0.68rem]">
+            <p className="mt-0.5 text-[0.62rem] uppercase tracking-[0.34em] text-taupe/80 sm:text-[0.68rem] sm:text-taupe/65">
               {labels.invitationLabel}
             </p>
           </a>
@@ -84,7 +84,7 @@ export function TopNavbar({ coupleLabel, labels }: TopNavbarProps) {
             aria-label={menuOpen ? labels.closeMenu : labels.openMenu}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((current) => !current)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/45 text-cocoa md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/55 bg-white/72 text-cocoa shadow-sm md:hidden"
           >
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
