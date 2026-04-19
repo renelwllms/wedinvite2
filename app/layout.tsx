@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Great_Vibes, Manrope } from "next/font/google";
 
 import "./globals.css";
 import { invitationData } from "@/data/invitation";
@@ -17,6 +17,12 @@ const body = Manrope({
   weight: ["400", "500", "600", "700"]
 });
 
+const script = Great_Vibes({
+  subsets: ["latin"],
+  variable: "--font-script",
+  weight: ["400"]
+});
+
 export const metadata: Metadata = buildMetadata(invitationData);
 
 export default function RootLayout({
@@ -26,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${body.variable} font-body antialiased`}>
+      <body className={`${display.variable} ${body.variable} ${script.variable} font-body antialiased`}>
         {children}
       </body>
     </html>

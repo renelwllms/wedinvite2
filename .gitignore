@@ -9,4 +9,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+.next-*.log
+deploy-*.zip
 .codex/
+tsconfig.tsbuildinfo

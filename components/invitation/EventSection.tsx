@@ -9,20 +9,20 @@ export function EventSection({ data }: { data: InvitationData }) {
     <SectionContainer
       id="events"
       eyebrow="Celebration Details"
-      title="Mark the moments"
-      description="From the ceremony to the reception, here is where our day unfolds."
+      title="The details of the day"
+      description="A simple guide for the ceremony, reception, and the atmosphere we would love to share with you."
     >
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-[1.2fr_1.2fr_0.8fr]">
         {data.events.map((event, index) => (
           <AnimatedReveal key={event.type} delay={index * 0.1}>
-            <article className="glass-panel flex h-full flex-col rounded-[2rem] border border-white/40 p-6 shadow-soft">
+            <article className="texture-panel flex h-full flex-col rounded-[2rem] border border-white/60 p-6 shadow-panel">
               <p className="text-sm uppercase tracking-[0.35em] text-gold/80">{event.type}</p>
               <h3 className="mt-4 font-display text-3xl font-semibold text-cocoa">{event.venue}</h3>
-              <div className="mt-6 space-y-4 text-cocoa/75">
+              <div className="mt-6 space-y-4 text-taupe/78">
                 <p>{event.dateLabel}</p>
                 <p>{event.timeLabel}</p>
                 <p>{event.address}</p>
-                {event.note ? <p className="text-sm text-cocoa/60">{event.note}</p> : null}
+                {event.note ? <p className="text-sm text-taupe/60">{event.note}</p> : null}
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
                 {event.mapsUrl ? (
@@ -62,6 +62,16 @@ export function EventSection({ data }: { data: InvitationData }) {
             </article>
           </AnimatedReveal>
         ))}
+        <AnimatedReveal delay={0.2}>
+          <article className="texture-panel flex h-full flex-col rounded-[2rem] border border-white/60 p-6 shadow-panel">
+            <p className="text-sm uppercase tracking-[0.35em] text-gold/80">Dress code</p>
+            <h3 className="mt-4 font-display text-3xl font-semibold text-cocoa">Soft formal</h3>
+            <div className="mt-6 space-y-4 text-taupe/78">
+              <p>{data.details.dressCode}</p>
+              <p>{data.details.attireNote}</p>
+            </div>
+          </article>
+        </AnimatedReveal>
       </div>
     </SectionContainer>
   );

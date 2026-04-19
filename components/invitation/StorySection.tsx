@@ -1,39 +1,87 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Heart } from "lucide-react";
 
 import type { InvitationData } from "@/data/invitation";
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
 import { SectionContainer } from "@/components/invitation/SectionContainer";
 
 export function StorySection({ data }: { data: InvitationData }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <SectionContainer
       id="story"
       eyebrow="Our Journey"
-      title="A love written over time"
-      description="The milestones that brought us to this promise."
-      className="bg-white/20"
+      title="Our love story"
+      description="A few meaningful chapters that gently led us here."
     >
-      <div className="relative mx-auto max-w-4xl">
-        <div className="timeline-line absolute left-[1.1rem] top-0 h-full w-px sm:left-1/2 sm:-translate-x-1/2" />
-        <div className="space-y-10">
-          {data.story.map((item, index) => (
-            <AnimatedReveal key={item.year} delay={index * 0.1}>
-              <div className={`grid items-center gap-6 sm:grid-cols-2 ${index % 2 === 1 ? "sm:[&>*:first-child]:order-2" : ""}`}>
-                <div className="relative pl-10 sm:pl-0">
-                  <span className="absolute left-0 top-3 z-10 h-4 w-4 rounded-full border-4 border-background bg-gold sm:left-1/2 sm:-translate-x-1/2" />
-                  <div className="glass-panel rounded-[2rem] border border-white/40 p-6 shadow-soft">
-                    <p className="text-sm uppercase tracking-[0.35em] text-gold/80">{item.year}</p>
-                    <h3 className="mt-3 font-display text-3xl text-cocoa">{item.title}</h3>
-                    <p className="mt-4 leading-7 text-cocoa/75">{item.description}</p>
+      <div className="mx-auto max-w-6xl">
+        <AnimatedReveal className="mx-auto max-w-3xl">
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-white/60 bg-[linear-gradient(135deg,rgba(255,248,242,0.96),rgba(244,227,217,0.92))] px-6 py-10 text-center shadow-panel sm:px-10">
+            <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/80 text-rose-500 shadow-soft">
+              <Heart className="h-7 w-7 fill-current" />
+            </div>
+            <p className="mt-5 font-script text-4xl text-cocoa sm:text-5xl">Our Story</p>
+            <p className="mt-4 text-base leading-8 text-taupe/78 sm:text-lg">
+              A quiet collection of moments, saved for the guests who would like to open and read them.
+            </p>
+            <button
+              type="button"
+              onClick={() => setIsOpen((current) => !current)}
+              className="mt-8 inline-flex items-center gap-3 rounded-full border border-[#d9b7aa] bg-white/85 px-7 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-cocoa transition hover:-translate-y-0.5 hover:bg-white"
+            >
+              <Heart className="h-4 w-4 fill-current text-rose-500" />
+              {isOpen ? "Hide Our Story" : "Open Our Story"}
+            </button>
+          </div>
+        </AnimatedReveal>
+
+        {isOpen ? (
+          <div className="relative mt-12">
+            <div className="timeline-line absolute left-[1.1rem] top-0 h-full w-px sm:left-1/2 sm:-translate-x-1/2" />
+            <div className="space-y-10">
+              {data.story.map((item, index) => (
+                <AnimatedReveal key={`${item.year}-${item.title}`} delay={index * 0.1}>
+                  <div className={`grid items-center gap-6 sm:grid-cols-2 sm:gap-10 ${index % 2 === 1 ? "sm:[&>*:first-child]:order-2" : ""}`}>
+                    <div className="relative pl-10 sm:pl-0">
+                      <span className="absolute left-0 top-4 z-10 h-4 w-4 rounded-full border-4 border-background bg-gold sm:left-1/2 sm:-translate-x-1/2" />
+                      <div className="texture-panel rounded-[2rem] border border-white/60 p-6 shadow-panel sm:p-8">
+                        <p className="text-sm uppercase tracking-[0.35em] text-gold/80">{item.year}</p>
+                        <h3 className="mt-3 text-balance font-display text-3xl leading-tight text-cocoa sm:text-4xl">{item.title}</h3>
+                        <p className="mt-4 leading-8 text-taupe/78">{item.description}</p>
+                      </div>
+                    </div>
+                    <motion.div
+                      whileHover={{ rotate: index % 2 === 0 ? -1 : 1, y: -4 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                      className={`polaroid-card polaroid-tape relative mx-auto w-full max-w-md p-4 pb-6 ${index % 2 === 0 ? "rotate-[-3deg]" : "rotate-[3deg]"}`}
+                    >
+                      <div className="overflow-hidden rounded-[1.2rem] bg-[#ede2d3]">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          width={900}
+                          height={1080}
+                          loading="lazy"
+                          className="aspect-[4/5] h-full w-full object-cover transition duration-700 hover:scale-[1.03]"
+                        />
+                      </div>
+                      <div className="px-2 pt-5 text-center">
+                        <p className="font-display text-2xl italic text-cocoa">{item.title}</p>
+                        <p className="mt-2 text-xs uppercase tracking-[0.32em] text-taupe/60">{item.year}</p>
+                      </div>
+                    </motion.div>
                   </div>
-                </div>
-                <div className="overflow-hidden rounded-[2rem] shadow-soft">
-                  <Image src={item.image} alt={item.title} width={900} height={700} loading="lazy" className="h-full w-full object-cover" />
-                </div>
-              </div>
-            </AnimatedReveal>
-          ))}
-        </div>
+                </AnimatedReveal>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     </SectionContainer>
   );

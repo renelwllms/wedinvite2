@@ -9,6 +9,19 @@ import type { InvitationData } from "@/data/invitation";
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
 import { SectionContainer } from "@/components/invitation/SectionContainer";
 
+function getPolaroidClass(index: number) {
+  const rotations = [
+    "rotate-[-5deg]",
+    "rotate-[4deg]",
+    "rotate-[-3deg]",
+    "rotate-[5deg]",
+    "rotate-[-4deg]",
+    "rotate-[3deg]"
+  ];
+
+  return rotations[index % rotations.length];
+}
+
 export function GallerySection({ data }: { data: InvitationData }) {
   const [activeImage, setActiveImage] = useState<string | null>(null);
 
@@ -16,28 +29,35 @@ export function GallerySection({ data }: { data: InvitationData }) {
     <SectionContainer
       id="gallery"
       eyebrow="Moments"
-      title="Fragments of our story"
-      description="A few quiet frames from the season that led us here."
+      title="Memories"
+      description="A soft collection of frames from the season that brought us to this promise."
     >
-      <div className="columns-2 gap-4 space-y-4 md:columns-3">
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {data.gallery.map((image, index) => (
-          <AnimatedReveal key={image} delay={index * 0.05} className="break-inside-avoid">
-            <button
+          <AnimatedReveal key={image} delay={index * 0.05} className={index % 3 === 1 ? "lg:translate-y-10" : ""}>
+            <motion.button
               type="button"
-              className="group relative w-full overflow-hidden rounded-[1.75rem] shadow-soft"
+              whileHover={{ y: -6, rotate: 0, scale: 1.015 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              className={`polaroid-card polaroid-tape group relative w-full p-4 pb-6 text-left ${getPolaroidClass(index)}`}
               onClick={() => setActiveImage(image)}
               aria-label="Open gallery image"
             >
-              <Image
-                src={image}
-                alt={`Gallery moment ${index + 1}`}
-                width={800}
-                height={1000}
-                loading="lazy"
-                className="h-auto w-full object-cover transition duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition group-hover:opacity-100" />
-            </button>
+              <div className="overflow-hidden rounded-[1.2rem] bg-[#ede2d3]">
+                <Image
+                  src={image}
+                  alt={`Gallery moment ${index + 1}`}
+                  width={900}
+                  height={1100}
+                  loading="lazy"
+                  className="aspect-[4/5] h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+                />
+              </div>
+              <div className="px-2 pt-5 text-center">
+                <p className="font-display text-2xl italic text-cocoa">Moment {String(index + 1).padStart(2, "0")}</p>
+                <p className="mt-2 text-xs uppercase tracking-[0.32em] text-taupe/60">Captured with love</p>
+              </div>
+            </motion.button>
           </AnimatedReveal>
         ))}
       </div>
@@ -67,7 +87,7 @@ export function GallerySection({ data }: { data: InvitationData }) {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="relative max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-[2rem]"
+              className="relative max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-[2rem]"
               onClick={(event) => event.stopPropagation()}
             >
               <Image src={activeImage} alt="Selected gallery image" width={1600} height={1200} className="h-auto max-h-[90vh] w-full object-contain" />

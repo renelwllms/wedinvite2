@@ -1,5 +1,6 @@
 export type CountdownState = {
   total: number;
+  months: number;
   days: number;
   hours: number;
   minutes: number;
@@ -15,6 +16,7 @@ export function getCountdown(targetISO: string): CountdownState {
   if (total <= 0) {
     return {
       total: 0,
+      months: 0,
       days: 0,
       hours: 0,
       minutes: 0,
@@ -23,9 +25,14 @@ export function getCountdown(targetISO: string): CountdownState {
     };
   }
 
+  const totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
+  const months = Math.floor(totalDays / 30);
+  const days = totalDays % 30;
+
   return {
     total,
-    days: Math.floor(total / (1000 * 60 * 60 * 24)),
+    months,
+    days,
     hours: Math.floor((total / (1000 * 60 * 60)) % 24),
     minutes: Math.floor((total / (1000 * 60)) % 60),
     seconds: Math.floor((total / 1000) % 60),
