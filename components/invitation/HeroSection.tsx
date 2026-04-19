@@ -66,13 +66,13 @@ export function HeroSection({ data }: { data: InvitationData }) {
               </div>
             </div>
             <div className="mt-6 space-y-2 rounded-[1.5rem] bg-white/72 px-4 py-5 sm:px-5">
-              <div className="space-y-0.5">
-                <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">On</p>
-                <p className="font-display text-3xl font-semibold leading-none text-cocoa sm:text-4xl">{data.saveDate.title}</p>
+              <div className="space-y-0">
+                <p className="text-[0.72rem] uppercase leading-none tracking-[0.34em] text-taupe/52">On</p>
+                <p className="-mt-1 font-display text-3xl font-semibold leading-none text-cocoa sm:text-4xl">{data.saveDate.title}</p>
               </div>
-              <div className="space-y-1 pt-1">
-                <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">At</p>
-                <p className="font-display text-3xl font-semibold leading-none text-cocoa sm:text-4xl">{data.events[0]?.timeLabel}</p>
+              <div className="space-y-0">
+                <p className="text-[0.72rem] uppercase leading-none tracking-[0.34em] text-taupe/52">At</p>
+                <p className="-mt-1 font-display text-3xl font-semibold leading-none text-cocoa sm:text-4xl">{data.events[0]?.timeLabel}</p>
               </div>
               <div className="space-y-1 pt-1">
                 <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">Location</p>
