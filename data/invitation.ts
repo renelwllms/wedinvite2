@@ -216,11 +216,10 @@ const sharedMedia = {
   brideImage: "/images/wedding-photo-1.jpg",
   groomImage: "/images/wedding-photo-2.jpg",
   storyImages: [
-    "/images/wedding-photo-3.jpg",
-    "/images/wedding-photo-4.jpg",
-    "/images/wedding-photo-5.jpg",
-    "/images/wedding-photo-6.jpg",
-    "/images/wedding-photo-7.jpg"
+    "/images/story-first-travel.jpeg",
+    "/images/story-meeting.jpg",
+    "/images/story-engagement.jpg",
+    "/images/story-wedding-day.jpg"
   ],
   gallery: [
     "/images/wedding-photo-1.jpg",
@@ -429,18 +428,11 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         image: sharedMedia.storyImages[2]
       },
       {
-        year: "2025",
-        title: "First Movie Together",
-        description:
-          "The simple joy of being side by side made ordinary moments feel unforgettable.",
-        image: sharedMedia.storyImages[3]
-      },
-      {
         year: "2026",
         title: "Our Wedding Day",
         description:
           "On June 10, 2026, we begin our marriage surrounded by the love and prayers of the people who matter most.",
-        image: sharedMedia.storyImages[4]
+        image: sharedMedia.storyImages[3]
       }
     ],
     gallery: sharedMedia.gallery,
@@ -681,18 +673,11 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         image: sharedMedia.storyImages[2]
       },
       {
-        year: "2025",
-        title: "Menonton Film Bersama Untuk Pertama Kali",
-        description:
-          "Kesederhanaan saat duduk berdampingan membuat momen biasa terasa begitu berkesan.",
-        image: sharedMedia.storyImages[3]
-      },
-      {
         year: "2026",
         title: "Hari Pernikahan Kami",
         description:
           "Pada 10 Juni 2026, kami memulai pernikahan kami dikelilingi cinta dan doa dari orang-orang yang paling berarti.",
-        image: sharedMedia.storyImages[4]
+        image: sharedMedia.storyImages[3]
       }
     ],
     gallery: sharedMedia.gallery,
