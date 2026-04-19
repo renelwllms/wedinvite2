@@ -1,18 +1,19 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
 import { SectionContainer } from "@/components/invitation/SectionContainer";
-import type { InvitationData } from "@/data/invitation";
+import type { InvitationData, InvitationLocale } from "@/data/invitation";
 import type { RSVPFormValues } from "@/lib/validation";
-import { rsvpSchema } from "@/lib/validation";
+import { createRsvpSchema } from "@/lib/validation";
 
 type RSVPSectionProps = {
   data: InvitationData;
   guestName: string;
+  locale: InvitationLocale;
 };
 
 type SubmitState = {
@@ -20,9 +21,11 @@ type SubmitState = {
   message?: string;
 };
 
-export function RSVPSection({ data, guestName }: RSVPSectionProps) {
+export function RSVPSection({ data, guestName, locale }: RSVPSectionProps) {
   const [submitState, setSubmitState] = useState<SubmitState>({ type: "idle" });
   const [isPending, startTransition] = useTransition();
+  const rsvpCopy = data.ui.rsvp;
+  const schema = useMemo(() => createRsvpSchema(rsvpCopy.validation), [rsvpCopy.validation]);
 
   const {
     register,
@@ -31,7 +34,7 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
     watch,
     formState: { errors }
   } = useForm<RSVPFormValues>({
-    resolver: zodResolver(rsvpSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       fullName: guestName,
       email: "",
@@ -52,18 +55,18 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify({ ...values, locale })
       })
         .then(async (response) => {
           const payload = (await response.json()) as { message?: string };
 
           if (!response.ok) {
-            throw new Error(payload.message || "Unable to send RSVP.");
+            throw new Error(payload.message || rsvpCopy.error);
           }
 
           setSubmitState({
             type: "success",
-            message: payload.message || "Thank you. Your RSVP has been received."
+            message: payload.message || rsvpCopy.success
           });
           reset({
             fullName: values.fullName,
@@ -78,7 +81,7 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
         .catch((error: unknown) => {
           setSubmitState({
             type: "error",
-            message: error instanceof Error ? error.message : "Something went wrong while submitting your RSVP."
+            message: error instanceof Error ? error.message : rsvpCopy.error
           });
         });
     });
@@ -87,9 +90,9 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
   return (
     <SectionContainer
       id="rsvp"
-      eyebrow="RSVP"
-      title="Kindly reply"
-      description="For now this form posts to a mock API route, so it is easy to replace later with Supabase, email delivery, or Google Sheets."
+      eyebrow={rsvpCopy.eyebrow}
+      title={rsvpCopy.title}
+      description={rsvpCopy.description}
     >
       <AnimatedReveal>
         <form
@@ -98,17 +101,17 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
         >
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">Full name</span>
+              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.fullName}</span>
               <input
                 {...register("fullName")}
                 className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-                placeholder="Your full name"
+                placeholder={rsvpCopy.fullNamePlaceholder}
               />
               {errors.fullName ? <span className="mt-2 block text-sm text-[#a94442]">{errors.fullName.message}</span> : null}
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">Email</span>
+              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.email}</span>
               <input
                 type="email"
                 {...register("email")}
@@ -119,7 +122,7 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">Phone</span>
+              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.phone}</span>
               <input
                 {...register("phone")}
                 className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
@@ -129,13 +132,13 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">Attendance</span>
+              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.attendance}</span>
               <select
                 {...register("attendanceStatus")}
                 className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
               >
-                <option value="attending">Accept with pleasure</option>
-                <option value="not-attending">Decline with regrets</option>
+                <option value="attending">{rsvpCopy.attendanceAccept}</option>
+                <option value="not-attending">{rsvpCopy.attendanceDecline}</option>
               </select>
               {errors.attendanceStatus ? (
                 <span className="mt-2 block text-sm text-[#a94442]">{errors.attendanceStatus.message}</span>
@@ -143,24 +146,28 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">Number of guests</span>
+              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.guestCount}</span>
               <input
                 type="number"
                 min={1}
                 max={10}
                 {...register("guestCount")}
                 className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-                placeholder={attendanceStatus === "attending" ? "1" : "Optional"}
+                placeholder={
+                  attendanceStatus === "attending"
+                    ? rsvpCopy.guestCountAttendingPlaceholder
+                    : rsvpCopy.guestCountOptionalPlaceholder
+                }
               />
               {errors.guestCount ? <span className="mt-2 block text-sm text-[#a94442]">{errors.guestCount.message}</span> : null}
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">Dietary requirements</span>
+              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.dietaryRequirements}</span>
               <input
                 {...register("dietaryRequirements")}
                 className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-                placeholder="Optional"
+                placeholder={rsvpCopy.dietaryPlaceholder}
               />
               {errors.dietaryRequirements ? (
                 <span className="mt-2 block text-sm text-[#a94442]">{errors.dietaryRequirements.message}</span>
@@ -169,12 +176,12 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
           </div>
 
           <label className="mt-4 block">
-            <span className="mb-2 block text-sm font-medium text-cocoa">Message to the couple</span>
+            <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.message}</span>
             <textarea
               {...register("message")}
               rows={5}
               className="w-full rounded-[1.5rem] border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-              placeholder="Share a note, blessing, or a few warm words for the couple."
+              placeholder={rsvpCopy.messagePlaceholder}
             />
             {errors.message ? <span className="mt-2 block text-sm text-[#a94442]">{errors.message.message}</span> : null}
           </label>
@@ -185,7 +192,7 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
               disabled={isPending}
               className="inline-flex min-w-[15rem] items-center justify-center rounded-full bg-cocoa px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:bg-[#3a2a24] disabled:opacity-60"
             >
-              {isPending ? "Sending..." : "Send RSVP"}
+              {isPending ? rsvpCopy.sending : rsvpCopy.send}
             </button>
 
             {submitState.type !== "idle" ? (

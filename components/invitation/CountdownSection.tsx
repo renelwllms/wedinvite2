@@ -7,8 +7,6 @@ import { SectionContainer } from "@/components/invitation/SectionContainer";
 import type { InvitationData } from "@/data/invitation";
 import { getCountdown, type CountdownState } from "@/lib/countdown";
 
-const labels: Array<keyof Pick<CountdownState, "months" | "days" | "hours">> = ["months", "days", "hours"];
-
 const initialCountdown: CountdownState = {
   total: 0,
   months: 0,
@@ -22,6 +20,12 @@ const initialCountdown: CountdownState = {
 export function CountdownSection({ data }: { data: InvitationData }) {
   const [countdown, setCountdown] = useState<CountdownState>(initialCountdown);
   const [hasMounted, setHasMounted] = useState(false);
+  const countdownCopy = data.ui.countdown;
+  const labels = [
+    { key: "months", label: countdownCopy.months },
+    { key: "days", label: countdownCopy.days },
+    { key: "hours", label: countdownCopy.hours }
+  ] as const;
 
   useEffect(() => {
     setHasMounted(true);
@@ -47,17 +51,17 @@ export function CountdownSection({ data }: { data: InvitationData }) {
           <p className="text-sm uppercase tracking-[0.35em] text-taupe/65">{data.saveDate.venue}</p>
           {hasMounted && countdown.expired ? (
             <div className="text-center">
-              <p className="mt-8 font-display text-4xl text-cocoa sm:text-5xl">Today is the day</p>
-              <p className="mt-4 text-taupe/78">The celebration has begun. Thank you for being part of our story.</p>
+              <p className="mt-8 font-display text-4xl text-cocoa sm:text-5xl">{countdownCopy.todayTitle}</p>
+              <p className="mt-4 text-taupe/78">{countdownCopy.todayDescription}</p>
             </div>
           ) : (
             <div className="mt-8 grid grid-cols-3 gap-4">
               {labels.map((label) => (
-                <div key={label} className="rounded-[1.75rem] bg-white/78 px-4 py-6 text-center shadow-sm">
+                <div key={label.key} className="rounded-[1.75rem] bg-white/78 px-4 py-6 text-center shadow-sm">
                   <p className="font-display text-4xl font-semibold text-cocoa sm:text-5xl">
-                    {String(countdown[label]).padStart(2, "0")}
+                    {String(countdown[label.key]).padStart(2, "0")}
                   </p>
-                  <p className="mt-2 text-xs uppercase tracking-[0.35em] text-taupe/45">{label}</p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.35em] text-taupe/45">{label.label}</p>
                 </div>
               ))}
             </div>

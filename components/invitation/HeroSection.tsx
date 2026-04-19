@@ -9,6 +9,7 @@ import type { InvitationData } from "@/data/invitation";
 
 export function HeroSection({ data }: { data: InvitationData }) {
   const shouldReduceMotion = useReducedMotion();
+  const heroCopy = data.ui.hero;
 
   return (
     <section id="home" className="section-shell relative flex min-h-screen items-center px-4 pb-16 pt-28 sm:px-6 lg:px-8">
@@ -17,9 +18,10 @@ export function HeroSection({ data }: { data: InvitationData }) {
         alt={`${data.hero.brideName} and ${data.hero.groomName}`}
         fill
         priority
-        className="object-cover object-center opacity-[0.58]"
+        className="object-cover object-center opacity-[0.46]"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(34,27,23,0.16)_0%,rgba(60,45,37,0.42)_32%,rgba(247,240,232,0.72)_72%,rgba(247,240,232,1)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,19,16,0.88)_0%,rgba(35,26,22,0.76)_34%,rgba(55,41,34,0.46)_60%,rgba(247,240,232,0.08)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(30,22,18,0.28)_0%,rgba(52,38,31,0.18)_42%,rgba(247,240,232,0.8)_78%,rgba(247,240,232,1)_100%)]" />
       <div className="ornament-blur left-[-2rem] top-24 h-52 w-52 bg-white/50" />
       <div className="ornament-blur right-[-3rem] top-32 h-72 w-72 bg-champagne/35" />
 
@@ -44,7 +46,7 @@ export function HeroSection({ data }: { data: InvitationData }) {
               href="#intro"
               className="inline-flex items-center gap-3 rounded-full bg-[#f7efe6] px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-cocoa transition hover:bg-white"
             >
-              Open Invitation
+              {heroCopy.openInvitationCta}
               <ArrowDownRight className="h-4 w-4" />
             </a>
             <p className="text-sm uppercase tracking-[0.28em] text-white/72">{data.hero.dateLabel}</p>
@@ -68,11 +70,11 @@ export function HeroSection({ data }: { data: InvitationData }) {
               <p className="mt-5 text-base leading-7 text-taupe/78">{data.saveDate.location}</p>
               <div className="mt-8 grid gap-4 rounded-[1.75rem] bg-white/72 p-5 sm:grid-cols-2">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.35em] text-taupe/50">Ceremony</p>
+                  <p className="text-xs uppercase tracking-[0.35em] text-taupe/50">{heroCopy.ceremonyLabel}</p>
                   <p className="mt-2 text-lg font-medium text-cocoa">{data.events[0]?.timeLabel}</p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.35em] text-taupe/50">Reception</p>
+                  <p className="text-xs uppercase tracking-[0.35em] text-taupe/50">{heroCopy.receptionLabel}</p>
                   <p className="mt-2 text-lg font-medium text-cocoa">{data.events[1]?.timeLabel}</p>
                 </div>
               </div>

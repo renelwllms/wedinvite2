@@ -11,13 +11,14 @@ import { SectionContainer } from "@/components/invitation/SectionContainer";
 
 export function StorySection({ data }: { data: InvitationData }) {
   const [isOpen, setIsOpen] = useState(false);
+  const storyCopy = data.ui.storySection;
 
   return (
     <SectionContainer
       id="story"
-      eyebrow="Our Journey"
-      title="Our love story"
-      description="A few meaningful chapters that gently led us here."
+      eyebrow={storyCopy.eyebrow}
+      title={storyCopy.title}
+      description={storyCopy.description}
     >
       <div className="mx-auto max-w-6xl">
         <AnimatedReveal className="mx-auto max-w-3xl">
@@ -26,17 +27,15 @@ export function StorySection({ data }: { data: InvitationData }) {
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/80 text-rose-500 shadow-soft">
               <Heart className="h-7 w-7 fill-current" />
             </div>
-            <p className="mt-5 font-script text-4xl text-cocoa sm:text-5xl">Our Story</p>
-            <p className="mt-4 text-base leading-8 text-taupe/78 sm:text-lg">
-              A quiet collection of moments, saved for the guests who would like to open and read them.
-            </p>
+            <p className="mt-5 font-script text-4xl text-cocoa sm:text-5xl">{storyCopy.panelTitle}</p>
+            <p className="mt-4 text-base leading-8 text-taupe/78 sm:text-lg">{storyCopy.panelDescription}</p>
             <button
               type="button"
               onClick={() => setIsOpen((current) => !current)}
               className="mt-8 inline-flex items-center gap-3 rounded-full border border-[#d9b7aa] bg-white/85 px-7 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-cocoa transition hover:-translate-y-0.5 hover:bg-white"
             >
               <Heart className="h-4 w-4 fill-current text-rose-500" />
-              {isOpen ? "Hide Our Story" : "Open Our Story"}
+              {isOpen ? storyCopy.hideStory : storyCopy.openStory}
             </button>
           </div>
         </AnimatedReveal>

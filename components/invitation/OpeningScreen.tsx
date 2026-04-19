@@ -2,18 +2,40 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
-import type { InvitationData } from "@/data/invitation";
+import type { InvitationData, InvitationLocale } from "@/data/invitation";
 
 type OpeningScreenProps = {
   guestName: string;
   data: InvitationData;
   isOpen: boolean;
-  onOpen: () => void;
+  onSelectLanguage: (locale: InvitationLocale) => void;
 };
 
-export function OpeningScreen({ guestName, data, isOpen, onOpen }: OpeningScreenProps) {
+const languageCards: Array<{
+  locale: InvitationLocale;
+  buttonLabel: keyof InvitationData["ui"]["openingScreen"];
+  titleLabel: keyof InvitationData["ui"]["openingScreen"];
+  flag: string;
+}> = [
+  {
+    locale: "en",
+    buttonLabel: "englishButton",
+    titleLabel: "englishLabel",
+    flag: "🇳🇿"
+  },
+  {
+    locale: "id",
+    buttonLabel: "bahasaButton",
+    titleLabel: "bahasaLabel",
+    flag: "🇮🇩"
+  }
+];
+
+export function OpeningScreen({ guestName, data, isOpen, onSelectLanguage }: OpeningScreenProps) {
+  const openingCopy = data.ui.openingScreen;
+
   return (
     <AnimatePresence>
       {!isOpen ? (
@@ -30,7 +52,7 @@ export function OpeningScreen({ guestName, data, isOpen, onOpen }: OpeningScreen
           >
             <Image src={data.hero.coverImage} alt="Invitation cover" fill priority className="object-cover opacity-70" />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/32 to-[#241714]/76" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(22,16,13,0.82)_0%,rgba(38,27,22,0.64)_45%,rgba(36,23,20,0.76)_100%)]" />
           <div className="ornament-blur -left-10 top-16 h-48 w-48 bg-champagne/20" />
           <div className="ornament-blur bottom-14 right-0 h-56 w-56 bg-rose/20" />
 
@@ -52,18 +74,29 @@ export function OpeningScreen({ guestName, data, isOpen, onOpen }: OpeningScreen
             <p className="mt-4 text-sm tracking-[0.3em] text-white/75">{data.hero.dateLabel}</p>
 
             <div className="mt-10 rounded-[1.5rem] border border-white/15 bg-black/15 px-5 py-4">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/60">Reserved for</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-white/60">{openingCopy.reservedFor}</p>
               <p className="mt-2 text-xl font-medium text-champagne">{guestName}</p>
             </div>
 
-            <button
-              type="button"
-              onClick={onOpen}
-              className="mt-10 inline-flex w-full items-center justify-center gap-3 rounded-full bg-champagne px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-cocoa transition hover:bg-[#f0e2c8] focus:outline-none focus:ring-2 focus:ring-white/70"
-            >
-              Open Invitation
-              <ArrowRight className="h-4 w-4" />
-            </button>
+            <div className="mt-10 text-center">
+              <p className="text-xs uppercase tracking-[0.35em] text-white/60">{openingCopy.chooseLanguage}</p>
+              <p className="mt-3 text-sm text-white/70">{openingCopy.chooseLanguageDescription}</p>
+            </div>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {languageCards.map((card) => (
+                <button
+                  key={card.locale}
+                  type="button"
+                  onClick={() => onSelectLanguage(card.locale)}
+                  className="rounded-[1.5rem] border border-white/15 bg-white/10 px-4 py-5 text-center text-white transition hover:border-champagne/70 hover:bg-white/14 focus:outline-none focus:ring-2 focus:ring-white/70"
+                >
+                  <p className="text-sm font-semibold uppercase tracking-[0.28em]">{openingCopy[card.titleLabel]}</p>
+                  <p className="mt-3 text-3xl leading-none">{card.flag}</p>
+                  <p className="mt-4 text-xs uppercase tracking-[0.22em] text-champagne">{openingCopy[card.buttonLabel]}</p>
+                </button>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       ) : null}

@@ -6,7 +6,7 @@ export function ClosingSection({ data }: { data: InvitationData }) {
     <footer className="section-shell px-4 pb-24 pt-12 sm:px-6 lg:px-8">
       <AnimatedReveal>
         <div className="mx-auto max-w-4xl rounded-[2.5rem] border border-white/40 bg-[#2e241f] px-8 py-14 text-center text-white shadow-soft">
-          <p className="text-sm uppercase tracking-[0.35em] text-champagne/70">With love</p>
+          <p className="text-sm uppercase tracking-[0.35em] text-champagne/70">{data.ui.closingSection.eyebrow}</p>
           <h2 className="mt-5 font-display text-5xl font-semibold tracking-[-0.04em] sm:text-6xl">
             {data.hero.brideName} &amp; {data.hero.groomName}
           </h2>

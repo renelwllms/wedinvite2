@@ -1,5 +1,5 @@
 import { InvitationExperience } from "@/components/invitation/InvitationExperience";
-import { invitationData } from "@/data/invitation";
+import { defaultInvitationLocale, invitationDataByLocale } from "@/data/invitation";
 
 type InviteSearchParams = {
   to?: string | string[];
@@ -10,28 +10,29 @@ type InvitePageProps = {
 };
 
 export default async function InvitePage({ searchParams }: InvitePageProps) {
+  const defaultInvitationData = invitationDataByLocale[defaultInvitationLocale];
   const resolvedSearchParams = searchParams ? await Promise.resolve(searchParams) : undefined;
   const rawGuest = Array.isArray(resolvedSearchParams?.to)
     ? resolvedSearchParams.to[0]
     : resolvedSearchParams?.to;
-  const guestName = rawGuest?.trim() || invitationData.guestLabelFallback;
+  const guestName = rawGuest?.trim() || defaultInvitationData.guestLabelFallback;
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Event",
-    name: invitationData.seo.title,
-    startDate: invitationData.weddingDateISO,
+    name: defaultInvitationData.seo.title,
+    startDate: defaultInvitationData.weddingDateISO,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     eventStatus: "https://schema.org/EventScheduled",
-    description: invitationData.seo.description,
-    image: invitationData.seo.image,
+    description: defaultInvitationData.seo.description,
+    image: defaultInvitationData.seo.image,
     location: {
       "@type": "Place",
-      name: invitationData.saveDate.venue,
-      address: invitationData.saveDate.location
+      name: defaultInvitationData.saveDate.venue,
+      address: defaultInvitationData.saveDate.location
     },
     organizer: {
       "@type": "Person",
-      name: `${invitationData.hero.brideName} & ${invitationData.hero.groomName}`
+      name: `${defaultInvitationData.hero.brideName} & ${defaultInvitationData.hero.groomName}`
     }
   };
 
@@ -41,7 +42,7 @@ export default async function InvitePage({ searchParams }: InvitePageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <InvitationExperience data={invitationData} guestName={guestName} />
+      <InvitationExperience dataByLocale={invitationDataByLocale} guestName={guestName} />
     </>
   );
 }

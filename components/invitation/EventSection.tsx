@@ -5,12 +5,14 @@ import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
 import { SectionContainer } from "@/components/invitation/SectionContainer";
 
 export function EventSection({ data }: { data: InvitationData }) {
+  const eventCopy = data.ui.eventsSection;
+
   return (
     <SectionContainer
       id="events"
-      eyebrow="Celebration Details"
-      title="The details of the day"
-      description="A simple guide for the ceremony, reception, and the atmosphere we would love to share with you."
+      eyebrow={eventCopy.eyebrow}
+      title={eventCopy.title}
+      description={eventCopy.description}
     >
       <div className="grid gap-6 lg:grid-cols-[1.2fr_1.2fr_0.8fr]">
         {data.events.map((event, index) => (
@@ -33,7 +35,7 @@ export function EventSection({ data }: { data: InvitationData }) {
                     className="inline-flex items-center gap-2 rounded-full bg-cocoa px-4 py-2 text-sm font-medium text-white transition hover:bg-[#3a2a24]"
                   >
                     <MapPinned className="h-4 w-4" />
-                    Maps
+                    {eventCopy.maps}
                   </a>
                 ) : null}
                 {event.calendarUrl ? (
@@ -44,7 +46,7 @@ export function EventSection({ data }: { data: InvitationData }) {
                     className="inline-flex items-center gap-2 rounded-full border border-gold/25 px-4 py-2 text-sm font-medium text-cocoa transition hover:bg-white/70"
                   >
                     <CalendarPlus2 className="h-4 w-4" />
-                    Calendar
+                    {eventCopy.calendar}
                   </a>
                 ) : null}
                 {event.type.toLowerCase().includes("live") && data.livestream ? (
@@ -55,7 +57,7 @@ export function EventSection({ data }: { data: InvitationData }) {
                     className="inline-flex items-center gap-2 rounded-full border border-gold/25 px-4 py-2 text-sm font-medium text-cocoa transition hover:bg-white/70"
                   >
                     <Radio className="h-4 w-4" />
-                    Stream
+                    {eventCopy.stream}
                   </a>
                 ) : null}
               </div>
@@ -64,8 +66,8 @@ export function EventSection({ data }: { data: InvitationData }) {
         ))}
         <AnimatedReveal delay={0.2}>
           <article className="texture-panel flex h-full flex-col rounded-[2rem] border border-white/60 p-6 shadow-panel">
-            <p className="text-sm uppercase tracking-[0.35em] text-gold/80">Dress code</p>
-            <h3 className="mt-4 font-display text-3xl font-semibold text-cocoa">Soft formal</h3>
+            <p className="text-sm uppercase tracking-[0.35em] text-gold/80">{eventCopy.dressCodeEyebrow}</p>
+            <h3 className="mt-4 font-display text-3xl font-semibold text-cocoa">{eventCopy.dressCodeTitle}</h3>
             <div className="mt-6 space-y-4 text-taupe/78">
               <p>{data.details.dressCode}</p>
               <p>{data.details.attireNote}</p>

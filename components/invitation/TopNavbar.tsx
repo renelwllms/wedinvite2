@@ -8,19 +8,28 @@ import { cn } from "@/lib/helpers";
 
 type TopNavbarProps = {
   coupleLabel: string;
+  labels: {
+    invitationLabel: string;
+    home: string;
+    story: string;
+    date: string;
+    memories: string;
+    rsvp: string;
+    openMenu: string;
+    closeMenu: string;
+  };
 };
 
-const navItems = [
-  { href: "#home", label: "Home" },
-  { href: "#story", label: "Our Story" },
-  { href: "#date", label: "Date" },
-  { href: "#gallery", label: "Memories" },
-  { href: "#rsvp", label: "RSVP" }
-];
-
-export function TopNavbar({ coupleLabel }: TopNavbarProps) {
+export function TopNavbar({ coupleLabel, labels }: TopNavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navItems = [
+    { href: "#home", label: labels.home },
+    { href: "#story", label: labels.story },
+    { href: "#date", label: labels.date },
+    { href: "#gallery", label: labels.memories },
+    { href: "#rsvp", label: labels.rsvp }
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 36);
@@ -51,7 +60,7 @@ export function TopNavbar({ coupleLabel }: TopNavbarProps) {
               {coupleLabel}
             </p>
             <p className="mt-0.5 text-[0.62rem] uppercase tracking-[0.34em] text-taupe/65 sm:text-[0.68rem]">
-              Wedding Invitation
+              {labels.invitationLabel}
             </p>
           </a>
 
@@ -72,7 +81,7 @@ export function TopNavbar({ coupleLabel }: TopNavbarProps) {
 
           <button
             type="button"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-label={menuOpen ? labels.closeMenu : labels.openMenu}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((current) => !current)}
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/45 text-cocoa md:hidden"
