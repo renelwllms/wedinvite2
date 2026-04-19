@@ -181,6 +181,7 @@ export type InvitationData = {
   details: {
     dressCode: string;
     attireNote: string;
+    mapsUrl?: string;
   };
   gifts: {
     intro: string;
@@ -258,8 +259,8 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
       },
       hero: {
         openInvitationCta: "Open Invitation",
-        ceremonyLabel: "Ceremony",
-        receptionLabel: "Reception"
+        ceremonyLabel: "Akad",
+        receptionLabel: "Temu Manten"
       },
       navbar: {
         invitationLabel: "Wedding Invitation",
@@ -301,8 +302,8 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         maps: "Maps",
         calendar: "Calendar",
         stream: "Stream",
-        dressCodeEyebrow: "Dress code",
-        dressCodeTitle: "Soft formal"
+        dressCodeEyebrow: "Location",
+        dressCodeTitle: "Wedding venue"
       },
       rsvp: {
         eyebrow: "RSVP",
@@ -389,19 +390,23 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
     },
     events: [
       {
-        type: "Ceremony",
+        type: "Akad",
         dateLabel: "Wednesday, 10 June 2026",
-        timeLabel: "10:00 AM onwards",
-        venue: "Wedding ceremony",
-        address: "Venue details to be shared with guests soon.",
+        timeLabel: "9:00 AM",
+        venue: "Akad",
+        address: "Seputik Banyak 6",
+        mapsUrl:
+          "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
         note: "Please arrive a little early so we can begin together."
       },
       {
-        type: "Reception",
+        type: "Temu Manten",
         dateLabel: "Wednesday, 10 June 2026",
-        timeLabel: "Following the ceremony",
-        venue: "Wedding reception",
-        address: "Reception details will be shared soon.",
+        timeLabel: "11:00 AM",
+        venue: "Temu Manten",
+        address: "Seputik Banyak 6",
+        mapsUrl:
+          "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
         note: "We look forward to celebrating with you."
       }
     ],
@@ -437,9 +442,10 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
     ],
     gallery: sharedMedia.gallery,
     details: {
-      dressCode: "Soft formal in warm neutrals, champagne, taupe, or muted earth tones.",
-      attireNote:
-        "Please choose something comfortable, elegant, and celebration-ready for both the ceremony and the reception."
+      dressCode: "Seputik Banyak 6",
+      attireNote: "Tap the map button below to open the location in Google Maps.",
+      mapsUrl:
+        "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
     },
     gifts: {
       intro:
@@ -505,7 +511,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
       hero: {
         openInvitationCta: "Buka Undangan",
         ceremonyLabel: "Akad",
-        receptionLabel: "Resepsi"
+        receptionLabel: "Temu Manten"
       },
       navbar: {
         invitationLabel: "Undangan Pernikahan",
@@ -546,8 +552,8 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         maps: "Peta",
         calendar: "Kalender",
         stream: "Siaran",
-        dressCodeEyebrow: "Busana",
-        dressCodeTitle: "Formal lembut"
+        dressCodeEyebrow: "Lokasi",
+        dressCodeTitle: "Lokasi acara"
       },
       rsvp: {
         eyebrow: "RSVP",
@@ -636,17 +642,21 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
       {
         type: "Akad",
         dateLabel: "Rabu, 10 Juni 2026",
-        timeLabel: "Mulai pukul 10:00",
-        venue: "Acara akad nikah",
-        address: "Detail lokasi akan segera dibagikan kepada para tamu.",
+        timeLabel: "09.00",
+        venue: "Akad",
+        address: "Seputik Banyak 6",
+        mapsUrl:
+          "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
         note: "Mohon hadir sedikit lebih awal agar kita bisa memulai bersama."
       },
       {
-        type: "Resepsi",
+        type: "Temu Manten",
         dateLabel: "Rabu, 10 Juni 2026",
-        timeLabel: "Setelah akad selesai",
-        venue: "Acara resepsi",
-        address: "Detail lokasi resepsi akan segera dibagikan.",
+        timeLabel: "11.00",
+        venue: "Temu Manten",
+        address: "Seputik Banyak 6",
+        mapsUrl:
+          "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
         note: "Kami menantikan sukacita untuk merayakannya bersama Anda."
       }
     ],
@@ -682,9 +692,10 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
     ],
     gallery: sharedMedia.gallery,
     details: {
-      dressCode: "Busana formal lembut dengan nuansa netral hangat, champagne, taupe, atau warna bumi yang lembut.",
-      attireNote:
-        "Silakan memilih busana yang nyaman, elegan, dan sesuai untuk merayakan akad maupun resepsi."
+      dressCode: "Seputik Banyak 6",
+      attireNote: "Tekan tombol peta di bawah untuk membuka lokasi di Google Maps.",
+      mapsUrl:
+        "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
     },
     gifts: {
       intro:

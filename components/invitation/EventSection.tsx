@@ -72,6 +72,19 @@ export function EventSection({ data }: { data: InvitationData }) {
               <p>{data.details.dressCode}</p>
               <p>{data.details.attireNote}</p>
             </div>
+            {data.details.mapsUrl ? (
+              <div className="mt-8">
+                <a
+                  href={data.details.mapsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-cocoa px-4 py-2 text-sm font-medium text-white transition hover:bg-[#3a2a24]"
+                >
+                  <MapPinned className="h-4 w-4" />
+                  {eventCopy.maps}
+                </a>
+              </div>
+            ) : null}
           </article>
         </AnimatedReveal>
       </div>
