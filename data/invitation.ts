@@ -394,7 +394,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         dateLabel: "Wednesday, 10 June 2026",
         timeLabel: "9:00 AM",
         venue: "Akad",
-        address: "Seputik Banyak 6",
+        address: "Sb6, Tanjung Harapan, Seputih Banyak (komplek DPT)",
         mapsUrl:
           "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
         note: "Please arrive a little early so we can begin together."
@@ -404,7 +404,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         dateLabel: "Wednesday, 10 June 2026",
         timeLabel: "11:00 AM",
         venue: "Temu Manten",
-        address: "Seputik Banyak 6",
+        address: "Sb6, Tanjung Harapan, Seputih Banyak (komplek DPT)",
         mapsUrl:
           "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
         note: "We look forward to celebrating with you."
@@ -442,7 +442,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
     ],
     gallery: sharedMedia.gallery,
     details: {
-      dressCode: "Seputik Banyak 6",
+      dressCode: "Sb6, Tanjung Harapan, Seputih Banyak (komplek DPT)",
       attireNote: "Tap the map button below to open the location in Google Maps.",
       mapsUrl:
         "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
@@ -644,7 +644,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         dateLabel: "Rabu, 10 Juni 2026",
         timeLabel: "09.00",
         venue: "Akad",
-        address: "Seputik Banyak 6",
+        address: "Sb6, Tanjung Harapan, Seputih Banyak (komplek DPT)",
         mapsUrl:
           "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
         note: "Mohon hadir sedikit lebih awal agar kita bisa memulai bersama."
@@ -654,7 +654,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         dateLabel: "Rabu, 10 Juni 2026",
         timeLabel: "11.00",
         venue: "Temu Manten",
-        address: "Seputik Banyak 6",
+        address: "Sb6, Tanjung Harapan, Seputih Banyak (komplek DPT)",
         mapsUrl:
           "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
         note: "Kami menantikan sukacita untuk merayakannya bersama Anda."
@@ -692,7 +692,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
     ],
     gallery: sharedMedia.gallery,
     details: {
-      dressCode: "Seputik Banyak 6",
+      dressCode: "Sb6, Tanjung Harapan, Seputih Banyak (komplek DPT)",
       attireNote: "Tekan tombol peta di bawah untuk membuka lokasi di Google Maps.",
       mapsUrl:
         "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"

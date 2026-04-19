@@ -58,11 +58,11 @@ export function HeroSection({ data }: { data: InvitationData }) {
           <div className="mt-8 max-w-3xl rounded-[2rem] border border-white/35 bg-[rgba(255,248,241,0.78)] p-5 shadow-[0_24px_56px_rgba(28,20,17,0.14)] backdrop-blur-xl sm:p-6 lg:mt-10 lg:max-w-[42rem]">
             <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/65">{data.saveDate.eyebrow}</p>
             <div className="mt-4 space-y-4 text-cocoa">
-              <p className="font-display text-3xl font-semibold leading-tight sm:text-4xl">{data.hero.title}</p>
+              <p className="font-display text-xl font-normal leading-tight sm:text-2xl">{data.hero.title}</p>
               <div className="space-y-1">
-                <p className="font-display text-3xl leading-tight sm:text-4xl">{data.couple.bride.fullName}</p>
+                <p className="font-display text-3xl font-semibold leading-tight sm:text-4xl">{data.couple.bride.fullName}</p>
                 <p className="font-display text-2xl leading-none text-[#b89363] sm:text-3xl">&amp;</p>
-                <p className="font-display text-3xl leading-tight sm:text-4xl">{data.couple.groom.fullName}</p>
+                <p className="font-display text-3xl font-semibold leading-tight sm:text-4xl">{data.couple.groom.fullName}</p>
               </div>
             </div>
             <div className="mt-6 space-y-3 rounded-[1.5rem] bg-white/72 px-4 py-5 sm:px-5">
