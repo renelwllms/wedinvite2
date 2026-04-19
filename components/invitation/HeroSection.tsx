@@ -26,9 +26,9 @@ export function HeroSection({ data }: { data: InvitationData }) {
       <div className="ornament-blur left-[-2rem] top-24 h-52 w-52 bg-white/50" />
       <div className="ornament-blur right-[-3rem] top-32 h-72 w-72 bg-champagne/35" />
 
-      <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:items-end">
-        <AnimatedReveal className="max-w-3xl rounded-[2rem] bg-[linear-gradient(180deg,rgba(24,17,14,0.18),rgba(24,17,14,0.08))] px-2 py-5 sm:bg-transparent sm:px-0 sm:py-0 sm:pt-16">
-          <p className="text-sm uppercase tracking-[0.4em] text-white/78 drop-shadow-[0_3px_18px_rgba(8,6,5,0.45)] sm:text-white/72">
+      <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
+        <AnimatedReveal className="max-w-3xl rounded-[2rem] bg-[linear-gradient(180deg,rgba(24,17,14,0.18),rgba(24,17,14,0.08))] px-2 py-5 sm:px-4 sm:py-6 lg:max-w-[42rem] lg:self-start lg:rounded-[2.5rem] lg:bg-[linear-gradient(135deg,rgba(24,17,14,0.38),rgba(24,17,14,0.18))] lg:px-10 lg:py-10 lg:shadow-[0_28px_64px_rgba(18,12,10,0.22)]">
+          <p className="text-sm uppercase tracking-[0.4em] text-[#f6ede3] drop-shadow-[0_4px_20px_rgba(8,6,5,0.58)] sm:text-[#f2e6d8]">
             {data.hero.familyLine}
           </p>
           {data.hero.scriptAccent ? (
@@ -36,29 +36,29 @@ export function HeroSection({ data }: { data: InvitationData }) {
               {data.hero.scriptAccent}
             </p>
           ) : null}
-          <h1 className="mt-2 text-balance font-display text-6xl font-semibold leading-[0.88] tracking-[-0.05em] text-white drop-shadow-[0_10px_32px_rgba(30,22,18,0.25)] sm:text-7xl lg:text-[7rem]">
+          <h1 className="mt-2 text-balance font-display text-6xl font-semibold leading-[0.88] tracking-[-0.05em] text-white drop-shadow-[0_10px_32px_rgba(30,22,18,0.25)] sm:text-7xl lg:max-w-[11ch] lg:text-[6.6rem]">
             {data.hero.brideName}
             <span className="mx-2 inline-block text-4xl text-champagne sm:text-5xl lg:text-6xl">&amp;</span>
             {data.hero.groomName}
           </h1>
-          <p className="mt-6 max-w-xl text-balance text-sm uppercase tracking-[0.34em] text-white/92 drop-shadow-[0_4px_20px_rgba(8,6,5,0.5)] sm:text-base sm:text-white/82">
+          <p className="mt-6 max-w-xl text-balance text-sm uppercase tracking-[0.34em] text-[#fff5ea] drop-shadow-[0_5px_22px_rgba(8,6,5,0.62)] sm:text-base sm:text-[#f8ecde] lg:max-w-[32rem]">
             {data.hero.invitationLine}
           </p>
-          <p className="mt-8 max-w-2xl text-balance font-display text-2xl italic text-white/95 drop-shadow-[0_5px_22px_rgba(8,6,5,0.52)] sm:text-3xl sm:text-white/90">
+          <p className="mt-8 max-w-2xl text-balance font-display text-2xl italic text-white/95 drop-shadow-[0_5px_22px_rgba(8,6,5,0.52)] sm:text-3xl sm:text-white/90 lg:max-w-[34rem]">
             {data.hero.quote}
           </p>
-          <p className="mt-6 max-w-xl text-base leading-8 text-white/88 drop-shadow-[0_4px_20px_rgba(8,6,5,0.5)] sm:text-lg sm:text-white/78">
+          <p className="mt-6 max-w-xl text-base leading-8 text-white/88 drop-shadow-[0_4px_20px_rgba(8,6,5,0.5)] sm:text-lg sm:text-white/78 lg:max-w-[31rem]">
             {data.hero.blessing}
           </p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-10 flex flex-wrap items-center gap-4 lg:gap-5">
             <a
               href="#intro"
-              className="inline-flex items-center gap-3 rounded-full bg-[#f7efe6] px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-cocoa transition hover:bg-white"
+              className="inline-flex items-center gap-3 rounded-full border border-[#f3dfc0]/80 bg-[#fff4e6] px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-[#352824] shadow-[0_10px_24px_rgba(24,17,14,0.18)] transition hover:bg-white"
             >
               {heroCopy.openInvitationCta}
               <ArrowDownRight className="h-4 w-4" />
             </a>
-            <p className="text-sm uppercase tracking-[0.28em] text-white/84 drop-shadow-[0_4px_16px_rgba(8,6,5,0.42)] sm:text-white/72">
+            <p className="text-sm uppercase tracking-[0.28em] text-[#f7ebdc] drop-shadow-[0_4px_18px_rgba(8,6,5,0.58)] sm:text-[#f1e2d0] lg:max-w-[16rem]">
               {data.hero.dateLabel}
             </p>
           </div>
