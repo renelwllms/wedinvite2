@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 
@@ -11,7 +11,21 @@ import { SectionContainer } from "@/components/invitation/SectionContainer";
 
 export function StorySection({ data }: { data: InvitationData }) {
   const [isOpen, setIsOpen] = useState(false);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const storyCopy = data.ui.storySection;
+
+  useEffect(() => {
+    if (!isOpen || !sectionRef.current) {
+      return;
+    }
+
+    const sectionTop = sectionRef.current.getBoundingClientRect().top + window.scrollY;
+    const offsetTop = Math.max(sectionTop - 120, 0);
+
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: offsetTop, behavior: "auto" });
+    });
+  }, [isOpen]);
 
   return (
     <SectionContainer
@@ -20,7 +34,7 @@ export function StorySection({ data }: { data: InvitationData }) {
       title={storyCopy.title}
       description={storyCopy.description}
     >
-      <div className="mx-auto max-w-6xl">
+      <div ref={sectionRef} className="mx-auto max-w-6xl">
         <AnimatedReveal className="mx-auto max-w-3xl">
           <div className="relative overflow-hidden rounded-[2.5rem] border border-white/60 bg-[linear-gradient(135deg,rgba(255,248,242,0.96),rgba(244,227,217,0.92))] px-6 py-10 text-center shadow-panel sm:px-10">
             <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />

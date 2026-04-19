@@ -429,13 +429,6 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         image: sharedMedia.storyImages[2]
       },
       {
-        year: "2025",
-        title: "First Movie Together",
-        description:
-          "The simple joy of being side by side made ordinary moments feel unforgettable.",
-        image: sharedMedia.storyImages[3]
-      },
-      {
         year: "2026",
         title: "Our Wedding Day",
         description:
@@ -679,13 +672,6 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         description:
           "Pada 7 Desember 2024, kami merayakan sebuah janji indah untuk masa depan dan melangkah semakin dekat menuju selamanya.",
         image: sharedMedia.storyImages[2]
-      },
-      {
-        year: "2025",
-        title: "Menonton Film Bersama Untuk Pertama Kali",
-        description:
-          "Kesederhanaan saat duduk berdampingan membuat momen biasa terasa begitu berkesan.",
-        image: sharedMedia.storyImages[3]
       },
       {
         year: "2026",
