@@ -64,8 +64,7 @@ export function StorySection({ data }: { data: InvitationData }) {
                     <div className="relative pl-10 sm:pl-0">
                       <span className="absolute left-0 top-4 z-10 h-4 w-4 rounded-full border-4 border-background bg-gold sm:left-1/2 sm:-translate-x-1/2" />
                       <div className="texture-panel rounded-[2rem] border border-white/60 p-6 shadow-panel sm:p-8">
-                        <p className="text-sm uppercase tracking-[0.35em] text-gold/80">{item.year}</p>
-                        <h3 className="mt-3 text-balance font-display text-3xl leading-tight text-cocoa sm:text-4xl">{item.title}</h3>
+                        <h3 className="text-balance font-display text-3xl leading-tight text-cocoa sm:text-4xl">{item.title}</h3>
                         <p className="mt-4 leading-8 text-taupe/78">{item.description}</p>
                       </div>
                     </div>
@@ -86,7 +85,6 @@ export function StorySection({ data }: { data: InvitationData }) {
                       </div>
                       <div className="px-2 pt-5 text-center">
                         <p className="font-display text-2xl italic text-cocoa">{item.title}</p>
-                        <p className="mt-2 text-xs uppercase tracking-[0.32em] text-taupe/60">{item.year}</p>
                       </div>
                     </motion.div>
                   </div>
