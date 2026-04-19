@@ -100,6 +100,8 @@ export type InvitationData = {
       months: string;
       days: string;
       hours: string;
+      minutes: string;
+      seconds: string;
       todayTitle: string;
       todayDescription: string;
     };
@@ -237,7 +239,7 @@ export const defaultInvitationLocale: InvitationLocale = "en";
 export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = {
   en: {
     guestLabelFallback: "Dear Guest",
-    weddingDateISO: "2026-06-10T10:00:00+12:00",
+    weddingDateISO: "2026-06-10T00:00:00+12:00",
     seo: {
       title: "Wedding Invitation | Della & Renel",
       description:
@@ -287,6 +289,8 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         months: "Months",
         days: "Days",
         hours: "Hours",
+        minutes: "Minutes",
+        seconds: "Seconds",
         todayTitle: "Today is the day",
         todayDescription: "The celebration has begun. Thank you for being part of our story."
       },
@@ -376,7 +380,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
     saveDate: {
       eyebrow: "Save The Date",
       title: "10 June 2026",
-      venue: "Auckland wedding celebration",
+      venue: "A day we cannot wait to share with you",
       location: "Full ceremony and reception details will be shared with guests."
     },
     quoteBlock: {
@@ -488,7 +492,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
   },
   id: {
     guestLabelFallback: "Tamu Undangan",
-    weddingDateISO: "2026-06-10T10:00:00+12:00",
+    weddingDateISO: "2026-06-10T00:00:00+12:00",
     seo: {
       title: "Undangan Pernikahan | Della & Renel",
       description:
@@ -537,6 +541,8 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         months: "Bulan",
         days: "Hari",
         hours: "Jam",
+        minutes: "Menit",
+        seconds: "Detik",
         todayTitle: "Hari ini harinya",
         todayDescription: "Perayaan telah dimulai. Terima kasih telah menjadi bagian dari cerita kami."
       },
@@ -626,7 +632,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
     saveDate: {
       eyebrow: "Save The Date",
       title: "10 Juni 2026",
-      venue: "Perayaan pernikahan di Auckland",
+      venue: "Hari istimewa yang tidak sabar kami bagikan bersama Anda",
       location: "Detail lengkap akad dan resepsi akan dibagikan kepada para tamu."
     },
     quoteBlock: {

@@ -13,7 +13,6 @@ import { OpeningScreen } from "@/components/invitation/OpeningScreen";
 import { QuoteSection } from "@/components/invitation/QuoteSection";
 import { RSVPSection } from "@/components/invitation/RSVPSection";
 import { StorySection } from "@/components/invitation/StorySection";
-import { TopNavbar } from "@/components/invitation/TopNavbar";
 import type { InvitationData, InvitationLocale } from "@/data/invitation";
 
 type InvitationExperienceProps = {
@@ -117,7 +116,6 @@ export function InvitationExperience({ dataByLocale, guestName }: InvitationExpe
         isOpen={invitationOpened}
         onSelectLanguage={handleOpenInvitation}
       />
-      <TopNavbar coupleLabel={`${data.hero.brideName} & ${data.hero.groomName}`} labels={data.ui.navbar} />
 
       <main className="relative">
         <HeroSection data={data} />
