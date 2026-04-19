@@ -65,13 +65,19 @@ export function HeroSection({ data }: { data: InvitationData }) {
                 <p className="font-display text-3xl font-semibold leading-tight sm:text-4xl">{data.couple.groom.fullName}</p>
               </div>
             </div>
-            <div className="mt-6 space-y-3 rounded-[1.5rem] bg-white/72 px-4 py-5 sm:px-5">
-              <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">On</p>
-              <p className="font-display text-3xl font-semibold leading-none text-cocoa sm:text-4xl">{data.saveDate.title}</p>
-              <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">At</p>
-              <p className="text-lg font-medium text-cocoa sm:text-xl">{data.events[0]?.timeLabel}</p>
-              <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">Location</p>
-              <p className="text-base leading-7 text-taupe/82">{data.events[0]?.address}</p>
+            <div className="mt-6 space-y-2 rounded-[1.5rem] bg-white/72 px-4 py-5 sm:px-5">
+              <div className="space-y-0.5">
+                <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">On</p>
+                <p className="font-display text-3xl font-semibold leading-none text-cocoa sm:text-4xl">{data.saveDate.title}</p>
+              </div>
+              <div className="space-y-1 pt-1">
+                <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">At</p>
+                <p className="font-display text-3xl font-semibold leading-none text-cocoa sm:text-4xl">{data.events[0]?.timeLabel}</p>
+              </div>
+              <div className="space-y-1 pt-1">
+                <p className="text-[0.72rem] uppercase tracking-[0.34em] text-taupe/52">Location</p>
+                <p className="text-base leading-7 text-taupe/82">{data.events[0]?.address}</p>
+              </div>
               {data.events[0]?.mapsUrl ? (
                 <div className="pt-2">
                   <a
