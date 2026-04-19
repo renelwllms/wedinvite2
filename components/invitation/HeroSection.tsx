@@ -39,9 +39,6 @@ export function HeroSection({ data }: { data: InvitationData }) {
           <p className="mt-6 max-w-xl text-balance text-sm uppercase tracking-[0.34em] text-[#fff5ea] drop-shadow-[0_5px_22px_rgba(8,6,5,0.62)] sm:text-base sm:text-[#f8ecde] lg:max-w-[32rem]">
             {data.hero.invitationLine}
           </p>
-          <p className="mt-8 max-w-2xl text-balance font-display text-2xl italic text-white/95 drop-shadow-[0_5px_22px_rgba(8,6,5,0.52)] sm:text-3xl sm:text-white/90 lg:max-w-[34rem]">
-            {data.hero.quote}
-          </p>
           <p className="mt-6 max-w-xl text-base font-medium leading-8 text-[#fff4ea] drop-shadow-[0_6px_22px_rgba(8,6,5,0.68)] sm:text-lg sm:text-[#f8ebdf] lg:max-w-[31rem]">
             {data.hero.blessing}
           </p>
