@@ -27,7 +27,7 @@ export function getCountdown(targetISO: string): CountdownState {
 
   const totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
   const months = Math.floor(totalDays / 30);
-  const days = totalDays % 30;
+  const days = totalDays;
 
   return {
     total,
