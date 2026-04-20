@@ -28,8 +28,8 @@ export type StoryItem = {
 export type WishEntry = {
   id: string;
   fullName: string;
-  email: string;
-  phone: string;
+  email?: string;
+  phone?: string;
   attendanceStatus: "attending" | "not-attending";
   guestCount?: number;
   dietaryRequirements?: string;

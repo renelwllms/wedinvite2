@@ -43,11 +43,7 @@ export function createMockRSVPStore(seed: WishEntry[]): RSVPStore {
       const entry: WishEntry = {
         id: crypto.randomUUID(),
         fullName: payload.fullName,
-        email: payload.email,
-        phone: payload.phone,
         attendanceStatus: payload.attendanceStatus,
-        guestCount: payload.guestCount,
-        dietaryRequirements: payload.dietaryRequirements,
         message: payload.message,
         createdAt: new Date().toISOString()
       };
