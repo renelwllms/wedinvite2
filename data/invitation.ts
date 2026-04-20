@@ -248,7 +248,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
       title: "Wedding Invitation | Della & Renel",
       description:
         "Celebrate the wedding of Della Lusiana Putri and Renel Williams on June 10, 2026. View the invitation, moments, RSVP, and share your wishes.",
-      image: "/images/renel-della-bride.jpg",
+      image: "/images/renel-della-bride.jpeg",
       canonicalPath: "/invite"
     },
     ui: {
@@ -503,7 +503,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
       title: "Undangan Pernikahan | Della & Renel",
       description:
         "Rayakan pernikahan Della Lusiana Putri dan Renel Williams pada 10 Juni 2026. Lihat undangan, momen, RSVP, dan kirim doa terbaik Anda.",
-      image: "/images/renel-della-bride.jpg",
+      image: "/images/renel-della-bride.jpeg",
       canonicalPath: "/invite"
     },
     ui: {
