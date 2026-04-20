@@ -2,8 +2,24 @@ import type { Metadata } from "next";
 
 import type { InvitationData } from "@/data/invitation";
 
+function resolveSiteUrl() {
+  const candidate =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.DEPLOY_PRIME_URL ||
+    process.env.DEPLOY_URL ||
+    process.env.URL ||
+    process.env.SITE_URL ||
+    "http://localhost:3000";
+
+  const normalized = candidate.startsWith("http://") || candidate.startsWith("https://")
+    ? candidate
+    : `https://${candidate}`;
+
+  return normalized.replace(/\/$/, "");
+}
+
 export function buildMetadata(data: InvitationData): Metadata {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = resolveSiteUrl();
   const title = data.seo.title;
   const description = data.seo.description;
   const canonical = new URL(data.seo.canonicalPath, siteUrl).toString();
