@@ -1,6 +1,0 @@
-<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="900" fill="#DCC9B8"/>
-  <circle cx="260" cy="250" r="170" fill="#F8F3ED" fill-opacity="0.8"/>
-  <path d="M120 700C350 510 740 470 1020 730" stroke="#8D6D59" stroke-width="6"/>
-  <text x="600" y="470" fill="#5A4438" font-size="58" text-anchor="middle" font-family="serif">First meeting photo</text>
-</svg>

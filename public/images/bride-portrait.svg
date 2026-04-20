@@ -1,8 +1,0 @@
-<svg width="900" height="1125" viewBox="0 0 900 1125" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="900" height="1125" fill="#EDE1D1"/>
-  <rect x="70" y="70" width="760" height="985" rx="48" fill="#F8F3ED"/>
-  <circle cx="450" cy="360" r="140" fill="#D4BBA6"/>
-  <rect x="265" y="530" width="370" height="360" rx="180" fill="#C7A28E"/>
-  <path d="M240 930C302 830 390 780 450 780C510 780 598 830 660 930" stroke="#B78B4A" stroke-width="12" stroke-linecap="round"/>
-  <text x="450" y="1010" fill="#6E5447" font-size="42" text-anchor="middle" font-family="serif">Replace with bride photo</text>
-</svg>

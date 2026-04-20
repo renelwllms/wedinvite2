@@ -1,19 +1,19 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
 import { SectionContainer } from "@/components/invitation/SectionContainer";
-import type { InvitationData, InvitationLocale } from "@/data/invitation";
+import type { InvitationData } from "@/data/invitation";
+import { createMockRSVPStore } from "@/lib/rsvp-store";
 import type { RSVPFormValues } from "@/lib/validation";
 import { createRsvpSchema } from "@/lib/validation";
 
 type RSVPSectionProps = {
   data: InvitationData;
   guestName: string;
-  locale: InvitationLocale;
 };
 
 type SubmitState = {
@@ -21,38 +21,17 @@ type SubmitState = {
   message?: string;
 };
 
-export function RSVPSection({ data, guestName, locale }: RSVPSectionProps) {
+export function RSVPSection({ data, guestName }: RSVPSectionProps) {
   const [submitState, setSubmitState] = useState<SubmitState>({ type: "idle" });
-  const [submittedAcceptedWishes, setSubmittedAcceptedWishes] = useState<
+  const [acceptedWishes, setAcceptedWishes] = useState<
     Array<{ id: string; fullName: string; message: string; createdAt: string }>
   >([]);
   const [isPending, startTransition] = useTransition();
   const rsvpCopy = data.ui.rsvp;
   const schema = useMemo(() => createRsvpSchema(rsvpCopy.validation), [rsvpCopy.validation]);
-  const acceptedWishes = useMemo(() => {
-    const seededAccepted = data.seededWishes
-      .filter((entry) => entry.attendanceStatus === "attending")
-      .map((entry) => ({
-        id: entry.id,
-        fullName: entry.fullName,
-        message: entry.message,
-        createdAt: entry.createdAt
-      }));
-
-    const merged = new Map<string, { id: string; fullName: string; message: string; createdAt: string }>();
-
-    [...seededAccepted, ...submittedAcceptedWishes].forEach((entry) => {
-      merged.set(entry.fullName, entry);
-    });
-
-    return Array.from(merged.values()).sort((left, right) => {
-      if (left.createdAt === right.createdAt) {
-        return left.fullName.localeCompare(right.fullName);
-      }
-
-      return right.createdAt.localeCompare(left.createdAt);
-    });
-  }, [data.seededWishes, submittedAcceptedWishes]);
+  const rsvpStore = useMemo(() => createMockRSVPStore(data.seededWishes), [data.seededWishes]);
+  const allowLocalFallback =
+    typeof window !== "undefined" && ["localhost", "127.0.0.1"].includes(window.location.hostname);
 
   const {
     register,
@@ -68,54 +47,167 @@ export function RSVPSection({ data, guestName, locale }: RSVPSectionProps) {
     }
   });
 
+  const loadAcceptedWishes = useCallback(async () => {
+    const seededAccepted = data.seededWishes
+      .filter((entry) => entry.attendanceStatus === "attending")
+      .map((entry) => ({
+        id: entry.id,
+        fullName: entry.fullName,
+        message: entry.message,
+        createdAt: entry.createdAt
+      }));
+
+    try {
+      const response = await fetch("/api/rsvp", { cache: "no-store" });
+      const payload = (await response.json()) as {
+        entries?: Array<{ id: string; fullName: string; attendanceStatus: "attending" | "not-attending"; message: string; createdAt: string }>;
+      };
+
+      if (!response.ok) {
+        throw new Error("RSVP storage is unavailable.");
+      }
+
+      const merged = new Map<string, { id: string; fullName: string; message: string; createdAt: string }>();
+
+      [...seededAccepted, ...(payload.entries ?? []).filter((entry) => entry.attendanceStatus === "attending")].forEach((entry) => {
+        merged.set(entry.fullName, {
+          id: entry.id,
+          fullName: entry.fullName,
+          message: entry.message,
+          createdAt: entry.createdAt
+        });
+      });
+
+      setAcceptedWishes(
+        Array.from(merged.values()).sort((left, right) => right.createdAt.localeCompare(left.createdAt))
+      );
+    } catch {
+      if (!allowLocalFallback) {
+        setAcceptedWishes(seededAccepted);
+        return;
+      }
+
+      const entries = await rsvpStore.list();
+      setAcceptedWishes(
+        entries
+          .filter((entry) => entry.attendanceStatus === "attending")
+          .map((entry) => ({
+            id: entry.id,
+            fullName: entry.fullName,
+            message: entry.message,
+            createdAt: entry.createdAt
+          }))
+      );
+    }
+  }, [allowLocalFallback, data.seededWishes, rsvpStore]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void loadAcceptedWishes().catch(() => {
+      if (!cancelled) {
+        setAcceptedWishes([]);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [loadAcceptedWishes]);
+
   const onSubmit = handleSubmit((values) => {
     setSubmitState({ type: "idle" });
 
     startTransition(() => {
-      void fetch("/api/rsvp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ ...values, locale })
-      })
-        .then(async (response) => {
-          const payload = (await response.json()) as { message?: string };
+      void (async () => {
+        try {
+          let entry:
+            | { id: string; fullName: string; attendanceStatus: "attending" | "not-attending"; message: string; createdAt: string }
+            | undefined;
 
-          if (!response.ok) {
-            throw new Error(payload.message || rsvpCopy.error);
+          try {
+            const response = await fetch("/api/rsvp", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(values)
+            });
+            const contentType = response.headers.get("content-type") ?? "";
+            const payload = contentType.includes("application/json")
+              ? ((await response.json()) as {
+                  message?: string;
+                  entry?: { id: string; fullName: string; attendanceStatus: "attending" | "not-attending"; message: string; createdAt: string };
+                })
+              : { message: await response.text() };
+
+            if (!response.ok) {
+              throw new Error(payload.message || rsvpCopy.error);
+            }
+
+            entry = payload.entry;
+            setSubmitState({
+              type: "success",
+              message: payload.message || `${values.fullName}, ${rsvpCopy.success}`
+            });
+          } catch (error) {
+            if (!allowLocalFallback) {
+              throw error;
+            }
+
+            const localEntry = await rsvpStore.create(values);
+            entry = {
+              id: localEntry.id,
+              fullName: localEntry.fullName,
+              attendanceStatus: localEntry.attendanceStatus,
+              message: localEntry.message,
+              createdAt: localEntry.createdAt
+            };
+            setSubmitState({
+              type: "success",
+              message: `${localEntry.fullName}, ${rsvpCopy.success}`
+            });
+          }
+
+          if (!entry) {
+            throw new Error(rsvpCopy.error);
           }
 
           setSubmitState({
             type: "success",
-            message: payload.message || rsvpCopy.success
+            message: `${entry.fullName}, ${rsvpCopy.success}`
           });
           if (values.attendanceStatus === "attending") {
-            setSubmittedAcceptedWishes((current) => {
+            setAcceptedWishes((current) => {
               const nextEntry = {
-                id: `submitted-${values.fullName.toLowerCase().replace(/\s+/g, "-")}`,
-                fullName: values.fullName,
+                id: entry.id,
+                fullName: entry.fullName,
                 message: values.message,
-                createdAt: new Date().toISOString()
+                createdAt: entry.createdAt
               };
 
               return [...current.filter((entry) => entry.fullName !== values.fullName), nextEntry];
             });
           } else {
-            setSubmittedAcceptedWishes((current) => current.filter((entry) => entry.fullName !== values.fullName));
+            setAcceptedWishes((current) => current.filter((entry) => entry.fullName !== values.fullName));
           }
+
+          if (!allowLocalFallback) {
+            await loadAcceptedWishes();
+          }
+
           reset({
             fullName: values.fullName,
             attendanceStatus: values.attendanceStatus,
             message: ""
           });
-        })
-        .catch((error: unknown) => {
+        } catch (error: unknown) {
           setSubmitState({
             type: "error",
             message: error instanceof Error ? error.message : rsvpCopy.error
           });
-        });
+        }
+      })();
     });
   });
 

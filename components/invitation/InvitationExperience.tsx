@@ -138,7 +138,7 @@ export function InvitationExperience({ dataByLocale, guestName }: InvitationExpe
         <QuoteSection data={data} />
         <EventSection data={data} />
         <GallerySection data={data} />
-        <RSVPSection data={data} guestName={guestName} locale={locale} />
+        <RSVPSection data={data} guestName={guestName} />
         <ClosingSection data={data} />
       </main>
 
