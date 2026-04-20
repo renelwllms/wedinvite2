@@ -102,6 +102,7 @@ export type InvitationData = {
       hours: string;
       minutes: string;
       seconds: string;
+      introDescription: string;
       todayTitle: string;
       todayDescription: string;
     };
@@ -119,6 +120,7 @@ export type InvitationData = {
       eyebrow: string;
       title: string;
       description: string;
+      reservedFor: string;
       fullName: string;
       fullNamePlaceholder: string;
       email: string;
@@ -137,6 +139,8 @@ export type InvitationData = {
       sending: string;
       success: string;
       error: string;
+      acceptedTitle: string;
+      acceptedDescription: string;
       validation: RsvpValidationCopy;
     };
     closingSection: {
@@ -260,7 +264,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
       hero: {
         openInvitationCta: "Open Invitation",
         ceremonyLabel: "Akad",
-        receptionLabel: "Temu Manten"
+        receptionLabel: "Reception"
       },
       navbar: {
         invitationLabel: "Wedding Invitation",
@@ -291,6 +295,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         hours: "Hours",
         minutes: "Minutes",
         seconds: "Seconds",
+        introDescription: "Every heartbeat brings us closer to the moment we begin forever together.",
         todayTitle: "Today is the day",
         todayDescription: "The celebration has begun. Thank you for being part of our story."
       },
@@ -310,6 +315,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         title: "Kindly reply",
         description:
           "For now this form posts to a mock API route, so it is easy to replace later with Supabase, email delivery, or Google Sheets.",
+        reservedFor: "RSVP for",
         fullName: "Full name",
         fullNamePlaceholder: "Your full name",
         email: "Email",
@@ -328,6 +334,8 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         sending: "Sending...",
         success: "Thank you. Your RSVP has been received.",
         error: "Something went wrong while submitting your RSVP.",
+        acceptedTitle: "Accepted with love",
+        acceptedDescription: "Guests who have accepted the invitation and shared a message.",
         validation: {
           fullNameMin: "Please enter your full name.",
           emailInvalid: "Please enter a valid email address.",
@@ -400,10 +408,10 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         note: "Please arrive a little early so we can begin together."
       },
       {
-        type: "Temu Manten",
+        type: "Reception",
         dateLabel: "Wednesday, 10 June 2026",
         timeLabel: "11:00 AM",
-        venue: "Temu Manten",
+        venue: "Reception",
         address: "Sb6, Tanjung Harapan, Seputih Banyak (komplek DPT)",
         mapsUrl:
           "https://www.google.com/maps/place/4%C2%B050'42.7%22S+105%C2%B027'01.7%22E/@-4.8451947,105.4478996,1085m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d-4.8451947!4d105.4504745?hl=en&entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
@@ -541,6 +549,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         hours: "Jam",
         minutes: "Menit",
         seconds: "Detik",
+        introDescription: "Setiap detik membawa kami semakin dekat ke hari saat kami memulai selamanya bersama.",
         todayTitle: "Hari ini harinya",
         todayDescription: "Perayaan telah dimulai. Terima kasih telah menjadi bagian dari cerita kami."
       },
@@ -560,6 +569,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         title: "Mohon konfirmasi kehadiran",
         description:
           "Saat ini formulir ini masih menggunakan API tiruan sehingga nantinya mudah diganti ke Supabase, email, atau Google Sheets.",
+        reservedFor: "RSVP untuk",
         fullName: "Nama lengkap",
         fullNamePlaceholder: "Nama lengkap Anda",
         email: "Email",
@@ -578,6 +588,8 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         sending: "Mengirim...",
         success: "Terima kasih. RSVP Anda sudah kami terima.",
         error: "Terjadi kendala saat mengirim RSVP.",
+        acceptedTitle: "Diterima dengan sukacita",
+        acceptedDescription: "Tamu yang telah menerima undangan dan membagikan pesan untuk kami.",
         validation: {
           fullNameMin: "Silakan masukkan nama lengkap Anda.",
           emailInvalid: "Silakan masukkan alamat email yang valid.",

@@ -6,7 +6,6 @@ import { Heart } from "lucide-react";
 import type { CSSProperties } from "react";
 
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
-import { SectionContainer } from "@/components/invitation/SectionContainer";
 import type { InvitationData } from "@/data/invitation";
 import { getCountdown, type CountdownState } from "@/lib/countdown";
 
@@ -134,13 +133,8 @@ export function CountdownSection({ data }: { data: InvitationData }) {
   }, [data.weddingDateISO]);
 
   return (
-    <SectionContainer
-      id="date"
-      eyebrow={data.saveDate.eyebrow}
-      title={data.saveDate.title}
-      description={data.saveDate.location}
-      className="pt-10"
-    >
+    <section id="date" className="section-shell px-4 pb-[5.5rem] pt-10 sm:px-6 lg:px-8 md:pb-[7rem]">
+      <div className="mx-auto max-w-6xl">
       <AnimatedReveal>
         <div className="relative overflow-hidden rounded-[2.75rem] border border-white/65 bg-[linear-gradient(145deg,rgba(255,250,245,0.96),rgba(244,229,219,0.88))] p-6 text-center shadow-[0_30px_70px_rgba(87,63,49,0.12)] sm:p-10 md:p-14">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.78),transparent_45%),radial-gradient(circle_at_bottom,rgba(214,177,153,0.18),transparent_42%)]" />
@@ -166,7 +160,7 @@ export function CountdownSection({ data }: { data: InvitationData }) {
                   </div>
                   <p className="mt-6 font-script text-4xl text-[#b98973] sm:text-5xl">Counting down to forever</p>
                   <p className="mt-4 font-display text-4xl font-semibold text-cocoa sm:text-5xl">{data.saveDate.title}</p>
-                  <p className="mt-3 text-sm uppercase tracking-[0.28em] text-taupe/66">{data.saveDate.location}</p>
+                  <p className="mt-3 max-w-2xl text-base leading-7 text-taupe/74">{countdownCopy.introDescription}</p>
                 </div>
 
                 <div className="mx-auto mt-8 grid max-w-5xl grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
@@ -185,6 +179,7 @@ export function CountdownSection({ data }: { data: InvitationData }) {
           </div>
         </div>
       </AnimatedReveal>
-    </SectionContainer>
+      </div>
+    </section>
   );
 }

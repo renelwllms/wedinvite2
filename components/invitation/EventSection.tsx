@@ -19,7 +19,9 @@ export function EventSection({ data }: { data: InvitationData }) {
           <AnimatedReveal key={event.type} delay={index * 0.1}>
             <article className="texture-panel flex h-full flex-col rounded-[2rem] border border-white/60 p-6 shadow-panel">
               <p className="text-sm uppercase tracking-[0.35em] text-gold/80">{event.type}</p>
-              <h3 className="mt-4 font-display text-3xl font-semibold text-cocoa">{event.venue}</h3>
+              {event.venue && event.venue !== event.type ? (
+                <h3 className="mt-4 font-display text-3xl font-semibold text-cocoa">{event.venue}</h3>
+              ) : null}
               <div className="mt-6 space-y-4 text-taupe/78">
                 <p>{event.dateLabel}</p>
                 <p>{event.timeLabel}</p>

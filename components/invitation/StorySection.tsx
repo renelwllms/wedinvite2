@@ -7,7 +7,6 @@ import { Heart } from "lucide-react";
 
 import type { InvitationData } from "@/data/invitation";
 import { AnimatedReveal } from "@/components/invitation/AnimatedReveal";
-import { SectionContainer } from "@/components/invitation/SectionContainer";
 
 export function StorySection({ data }: { data: InvitationData }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,12 +27,7 @@ export function StorySection({ data }: { data: InvitationData }) {
   }, [isOpen]);
 
   return (
-    <SectionContainer
-      id="story"
-      eyebrow={storyCopy.eyebrow}
-      title={storyCopy.title}
-      description={storyCopy.description}
-    >
+    <section id="story" className="section-shell section-spacing px-4 sm:px-6 lg:px-8">
       <div ref={sectionRef} className="mx-auto max-w-6xl">
         <AnimatedReveal className="mx-auto max-w-3xl">
           <div className="relative overflow-hidden rounded-[2.5rem] border border-white/60 bg-[linear-gradient(135deg,rgba(255,248,242,0.96),rgba(244,227,217,0.92))] px-6 py-10 text-center shadow-panel sm:px-10">
@@ -94,6 +88,6 @@ export function StorySection({ data }: { data: InvitationData }) {
           </div>
         ) : null}
       </div>
-    </SectionContainer>
+    </section>
   );
 }

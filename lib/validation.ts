@@ -5,29 +5,9 @@ import type { RsvpValidationCopy } from "@/data/invitation";
 export function createRsvpSchema(messages: RsvpValidationCopy) {
   return z.object({
     fullName: z.string().min(2, messages.fullNameMin),
-    email: z.string().email(messages.emailInvalid),
-    phone: z
-      .string()
-      .min(7, messages.phoneMin)
-      .max(20, messages.phoneMax),
     attendanceStatus: z.enum(["attending", "not-attending"], {
       required_error: messages.attendanceRequired
     }),
-    guestCount: z.preprocess(
-      (value) => {
-        if (value === "" || value === null || value === undefined) {
-          return undefined;
-        }
-
-        return value;
-      },
-      z.coerce.number().int().min(1, messages.guestCountMin).max(10, messages.guestCountMax).optional()
-    ),
-    dietaryRequirements: z
-      .string()
-      .max(160, messages.dietaryMax)
-      .optional()
-      .or(z.literal("")),
     message: z
       .string()
       .min(8, messages.messageMin)

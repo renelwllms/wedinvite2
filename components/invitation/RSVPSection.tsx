@@ -23,28 +23,50 @@ type SubmitState = {
 
 export function RSVPSection({ data, guestName, locale }: RSVPSectionProps) {
   const [submitState, setSubmitState] = useState<SubmitState>({ type: "idle" });
+  const [submittedAcceptedWishes, setSubmittedAcceptedWishes] = useState<
+    Array<{ id: string; fullName: string; message: string; createdAt: string }>
+  >([]);
   const [isPending, startTransition] = useTransition();
   const rsvpCopy = data.ui.rsvp;
   const schema = useMemo(() => createRsvpSchema(rsvpCopy.validation), [rsvpCopy.validation]);
+  const acceptedWishes = useMemo(() => {
+    const seededAccepted = data.seededWishes
+      .filter((entry) => entry.attendanceStatus === "attending")
+      .map((entry) => ({
+        id: entry.id,
+        fullName: entry.fullName,
+        message: entry.message,
+        createdAt: entry.createdAt
+      }));
+
+    const merged = new Map<string, { id: string; fullName: string; message: string; createdAt: string }>();
+
+    [...seededAccepted, ...submittedAcceptedWishes].forEach((entry) => {
+      merged.set(entry.fullName, entry);
+    });
+
+    return Array.from(merged.values()).sort((left, right) => {
+      if (left.createdAt === right.createdAt) {
+        return left.fullName.localeCompare(right.fullName);
+      }
+
+      return right.createdAt.localeCompare(left.createdAt);
+    });
+  }, [data.seededWishes, submittedAcceptedWishes]);
 
   const {
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors }
   } = useForm<RSVPFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       fullName: guestName,
-      email: "",
-      phone: "",
       attendanceStatus: "attending",
       message: ""
     }
   });
-
-  const attendanceStatus = watch("attendanceStatus");
 
   const onSubmit = handleSubmit((values) => {
     setSubmitState({ type: "idle" });
@@ -68,13 +90,23 @@ export function RSVPSection({ data, guestName, locale }: RSVPSectionProps) {
             type: "success",
             message: payload.message || rsvpCopy.success
           });
+          if (values.attendanceStatus === "attending") {
+            setSubmittedAcceptedWishes((current) => {
+              const nextEntry = {
+                id: `submitted-${values.fullName.toLowerCase().replace(/\s+/g, "-")}`,
+                fullName: values.fullName,
+                message: values.message,
+                createdAt: new Date().toISOString()
+              };
+
+              return [...current.filter((entry) => entry.fullName !== values.fullName), nextEntry];
+            });
+          } else {
+            setSubmittedAcceptedWishes((current) => current.filter((entry) => entry.fullName !== values.fullName));
+          }
           reset({
             fullName: values.fullName,
-            email: "",
-            phone: "",
             attendanceStatus: values.attendanceStatus,
-            guestCount: undefined,
-            dietaryRequirements: "",
             message: ""
           });
         })
@@ -99,37 +131,14 @@ export function RSVPSection({ data, guestName, locale }: RSVPSectionProps) {
           onSubmit={onSubmit}
           className="mx-auto max-w-3xl rounded-[2.25rem] border border-white/60 bg-[#fbf6f0]/86 p-6 shadow-soft backdrop-blur sm:p-8 md:p-10"
         >
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.fullName}</span>
-              <input
-                {...register("fullName")}
-                className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-                placeholder={rsvpCopy.fullNamePlaceholder}
-              />
+          <input type="hidden" {...register("fullName")} value={guestName} />
+
+          <div className="space-y-4">
+            <div className="rounded-[1.5rem] border border-gold/15 bg-white/78 px-4 py-4">
+              <p className="text-[0.72rem] uppercase tracking-[0.28em] text-taupe/55">{rsvpCopy.reservedFor}</p>
+              <p className="mt-2 text-lg font-medium text-cocoa sm:text-xl">{guestName}</p>
               {errors.fullName ? <span className="mt-2 block text-sm text-[#a94442]">{errors.fullName.message}</span> : null}
-            </label>
-
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.email}</span>
-              <input
-                type="email"
-                {...register("email")}
-                className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-                placeholder="you@example.com"
-              />
-              {errors.email ? <span className="mt-2 block text-sm text-[#a94442]">{errors.email.message}</span> : null}
-            </label>
-
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.phone}</span>
-              <input
-                {...register("phone")}
-                className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-                placeholder="+64 ..."
-              />
-              {errors.phone ? <span className="mt-2 block text-sm text-[#a94442]">{errors.phone.message}</span> : null}
-            </label>
+            </div>
 
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.attendance}</span>
@@ -142,35 +151,6 @@ export function RSVPSection({ data, guestName, locale }: RSVPSectionProps) {
               </select>
               {errors.attendanceStatus ? (
                 <span className="mt-2 block text-sm text-[#a94442]">{errors.attendanceStatus.message}</span>
-              ) : null}
-            </label>
-
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.guestCount}</span>
-              <input
-                type="number"
-                min={1}
-                max={10}
-                {...register("guestCount")}
-                className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-                placeholder={
-                  attendanceStatus === "attending"
-                    ? rsvpCopy.guestCountAttendingPlaceholder
-                    : rsvpCopy.guestCountOptionalPlaceholder
-                }
-              />
-              {errors.guestCount ? <span className="mt-2 block text-sm text-[#a94442]">{errors.guestCount.message}</span> : null}
-            </label>
-
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-cocoa">{rsvpCopy.dietaryRequirements}</span>
-              <input
-                {...register("dietaryRequirements")}
-                className="w-full rounded-2xl border border-gold/15 bg-white/85 px-4 py-3 outline-none transition focus:border-gold"
-                placeholder={rsvpCopy.dietaryPlaceholder}
-              />
-              {errors.dietaryRequirements ? (
-                <span className="mt-2 block text-sm text-[#a94442]">{errors.dietaryRequirements.message}</span>
               ) : null}
             </label>
           </div>
@@ -203,6 +183,23 @@ export function RSVPSection({ data, guestName, locale }: RSVPSectionProps) {
           </div>
         </form>
       </AnimatedReveal>
+
+      {acceptedWishes.length > 0 ? (
+        <AnimatedReveal delay={0.1}>
+          <div className="mx-auto mt-8 max-w-3xl rounded-[2.25rem] border border-white/60 bg-[#fbf6f0]/78 p-6 shadow-soft backdrop-blur sm:p-8">
+            <p className="text-sm uppercase tracking-[0.32em] text-gold/80">{rsvpCopy.acceptedTitle}</p>
+            <p className="mt-3 text-base leading-7 text-taupe/78">{rsvpCopy.acceptedDescription}</p>
+            <div className="mt-6 space-y-4">
+              {acceptedWishes.map((entry) => (
+                <article key={entry.id} className="rounded-[1.5rem] border border-gold/15 bg-white/78 px-4 py-4 sm:px-5">
+                  <p className="font-display text-2xl text-cocoa">{entry.fullName}</p>
+                  <p className="mt-2 leading-7 text-taupe/78">{entry.message}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </AnimatedReveal>
+      ) : null}
     </SectionContainer>
   );
 }
