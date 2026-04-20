@@ -39,6 +39,19 @@ export function InvitationExperience({ dataByLocale, guestName }: InvitationExpe
     };
   }, [invitationOpened]);
 
+  useEffect(() => {
+    if (invitationOpened) {
+      return;
+    }
+
+    const browserLocales = navigator.languages ?? [navigator.language];
+    const prefersIndonesian = browserLocales.some((entry) => entry?.toLowerCase().startsWith("id"));
+
+    if (prefersIndonesian) {
+      setLocale("id");
+    }
+  }, [invitationOpened]);
+
   async function prepareMusicStartOffset() {
     if (!audioRef.current) {
       return;

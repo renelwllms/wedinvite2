@@ -15,15 +15,12 @@ type OpeningScreenProps = {
 
 const languageCards: Array<{
   locale: InvitationLocale;
-  flag: string;
 }> = [
   {
-    locale: "en",
-    flag: "🇳🇿"
+    locale: "en"
   },
   {
-    locale: "id",
-    flag: "🇮🇩"
+    locale: "id"
   }
 ];
 
@@ -94,7 +91,9 @@ export function OpeningScreen({ guestName, data, isOpen, onSelectLanguage }: Ope
                   className="rounded-[1.5rem] border border-white/15 bg-white/10 px-4 py-4 text-center text-white transition hover:border-champagne/70 hover:bg-white/14 focus:outline-none focus:ring-2 focus:ring-white/70 sm:py-5"
                   aria-label={card.locale === "en" ? openingCopy.englishButton : openingCopy.bahasaButton}
                 >
-                  <p className="text-4xl leading-none sm:text-[2.8rem]">{card.flag}</p>
+                  <p className="text-sm font-semibold uppercase tracking-[0.28em] sm:text-base">
+                    {card.locale === "en" ? openingCopy.englishLabel : openingCopy.bahasaLabel}
+                  </p>
                 </button>
               ))}
             </div>

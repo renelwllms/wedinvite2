@@ -253,7 +253,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         chooseLanguage: "Choose your language",
         chooseLanguageDescription: "Select how you would like to read the invitation.",
         englishLabel: "English",
-        bahasaLabel: "Bahasa",
+        bahasaLabel: "Bahasa Indonesia",
         englishButton: "Open in English",
         bahasaButton: "Buka dalam Bahasa"
       },
@@ -504,7 +504,7 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         chooseLanguage: "Pilih bahasa",
         chooseLanguageDescription: "Silakan pilih bahasa yang ingin digunakan untuk membaca undangan ini.",
         englishLabel: "English",
-        bahasaLabel: "Bahasa",
+        bahasaLabel: "Bahasa Indonesia",
         englishButton: "Open in English",
         bahasaButton: "Buka dalam Bahasa"
       },
