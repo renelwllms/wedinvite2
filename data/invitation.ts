@@ -139,8 +139,10 @@ export type InvitationData = {
       sending: string;
       success: string;
       error: string;
-      acceptedTitle: string;
-      acceptedDescription: string;
+      responsesTitle: string;
+      responsesDescription: string;
+      comingLabel: string;
+      notComingLabel: string;
       validation: RsvpValidationCopy;
     };
     closingSection: {
@@ -334,8 +336,10 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         sending: "Sending...",
         success: "Thank you. Your RSVP has been received.",
         error: "Something went wrong while submitting your RSVP.",
-        acceptedTitle: "Accepted with love",
-        acceptedDescription: "Guests who have accepted the invitation and shared a message.",
+        responsesTitle: "Guest responses",
+        responsesDescription: "See who is coming and who is unable to attend, along with any message they shared.",
+        comingLabel: "Coming",
+        notComingLabel: "Not coming",
         validation: {
           fullNameMin: "Please enter your full name.",
           emailInvalid: "Please enter a valid email address.",
@@ -588,8 +592,10 @@ export const invitationDataByLocale: Record<InvitationLocale, InvitationData> = 
         sending: "Mengirim...",
         success: "Terima kasih. RSVP Anda sudah kami terima.",
         error: "Terjadi kendala saat mengirim RSVP.",
-        acceptedTitle: "Diterima dengan sukacita",
-        acceptedDescription: "Tamu yang telah menerima undangan dan membagikan pesan untuk kami.",
+        responsesTitle: "Respon tamu",
+        responsesDescription: "Lihat siapa yang akan hadir dan siapa yang belum bisa hadir, beserta pesan yang mereka tinggalkan.",
+        comingLabel: "Hadir",
+        notComingLabel: "Belum bisa hadir",
         validation: {
           fullNameMin: "Silakan masukkan nama lengkap Anda.",
           emailInvalid: "Silakan masukkan alamat email yang valid.",

@@ -10,8 +10,8 @@ export function createRsvpSchema(messages: RsvpValidationCopy) {
     }),
     message: z
       .string()
-      .min(8, messages.messageMin)
       .max(320, messages.messageMax)
+      .transform((value) => value.trim())
   });
 }
 

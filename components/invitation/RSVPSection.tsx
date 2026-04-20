@@ -23,8 +23,14 @@ type SubmitState = {
 
 export function RSVPSection({ data, guestName }: RSVPSectionProps) {
   const [submitState, setSubmitState] = useState<SubmitState>({ type: "idle" });
-  const [acceptedWishes, setAcceptedWishes] = useState<
-    Array<{ id: string; fullName: string; message: string; createdAt: string }>
+  const [responses, setResponses] = useState<
+    Array<{
+      id: string;
+      fullName: string;
+      attendanceStatus: "attending" | "not-attending";
+      message: string;
+      createdAt: string;
+    }>
   >([]);
   const [isPending, startTransition] = useTransition();
   const rsvpCopy = data.ui.rsvp;
@@ -48,14 +54,13 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
   });
 
   const loadAcceptedWishes = useCallback(async () => {
-    const seededAccepted = data.seededWishes
-      .filter((entry) => entry.attendanceStatus === "attending")
-      .map((entry) => ({
-        id: entry.id,
-        fullName: entry.fullName,
-        message: entry.message,
-        createdAt: entry.createdAt
-      }));
+    const seededResponses = data.seededWishes.map((entry) => ({
+      id: entry.id,
+      fullName: entry.fullName,
+      attendanceStatus: entry.attendanceStatus,
+      message: entry.message,
+      createdAt: entry.createdAt
+    }));
 
     try {
       const response = await fetch("/api/rsvp", { cache: "no-store" });
@@ -67,37 +72,32 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
         throw new Error("RSVP storage is unavailable.");
       }
 
-      const merged = new Map<string, { id: string; fullName: string; message: string; createdAt: string }>();
+      const merged = new Map<
+        string,
+        {
+          id: string;
+          fullName: string;
+          attendanceStatus: "attending" | "not-attending";
+          message: string;
+          createdAt: string;
+        }
+      >();
 
-      [...seededAccepted, ...(payload.entries ?? []).filter((entry) => entry.attendanceStatus === "attending")].forEach((entry) => {
-        merged.set(entry.fullName, {
-          id: entry.id,
-          fullName: entry.fullName,
-          message: entry.message,
-          createdAt: entry.createdAt
-        });
+      [...seededResponses, ...(payload.entries ?? [])].forEach((entry) => {
+        merged.set(entry.fullName, entry);
       });
 
-      setAcceptedWishes(
+      setResponses(
         Array.from(merged.values()).sort((left, right) => right.createdAt.localeCompare(left.createdAt))
       );
     } catch {
       if (!allowLocalFallback) {
-        setAcceptedWishes(seededAccepted);
+        setResponses(seededResponses);
         return;
       }
 
       const entries = await rsvpStore.list();
-      setAcceptedWishes(
-        entries
-          .filter((entry) => entry.attendanceStatus === "attending")
-          .map((entry) => ({
-            id: entry.id,
-            fullName: entry.fullName,
-            message: entry.message,
-            createdAt: entry.createdAt
-          }))
-      );
+      setResponses(entries);
     }
   }, [allowLocalFallback, data.seededWishes, rsvpStore]);
 
@@ -106,7 +106,7 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
 
     void loadAcceptedWishes().catch(() => {
       if (!cancelled) {
-        setAcceptedWishes([]);
+        setResponses([]);
       }
     });
 
@@ -177,20 +177,19 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
             type: "success",
             message: `${entry.fullName}, ${rsvpCopy.success}`
           });
-          if (values.attendanceStatus === "attending") {
-            setAcceptedWishes((current) => {
-              const nextEntry = {
-                id: entry.id,
-                fullName: entry.fullName,
-                message: values.message,
-                createdAt: entry.createdAt
-              };
+          setResponses((current) => {
+            const nextEntry = {
+              id: entry.id,
+              fullName: entry.fullName,
+              attendanceStatus: values.attendanceStatus,
+              message: values.message,
+              createdAt: entry.createdAt
+            };
 
-              return [...current.filter((entry) => entry.fullName !== values.fullName), nextEntry];
-            });
-          } else {
-            setAcceptedWishes((current) => current.filter((entry) => entry.fullName !== values.fullName));
-          }
+            return [...current.filter((item) => item.fullName !== values.fullName), nextEntry].sort((left, right) =>
+              right.createdAt.localeCompare(left.createdAt)
+            );
+          });
 
           if (!allowLocalFallback) {
             await loadAcceptedWishes();
@@ -276,16 +275,31 @@ export function RSVPSection({ data, guestName }: RSVPSectionProps) {
         </form>
       </AnimatedReveal>
 
-      {acceptedWishes.length > 0 ? (
+      {responses.length > 0 ? (
         <AnimatedReveal delay={0.1}>
           <div className="mx-auto mt-8 max-w-3xl rounded-[2.25rem] border border-white/60 bg-[#fbf6f0]/78 p-6 shadow-soft backdrop-blur sm:p-8">
-            <p className="text-sm uppercase tracking-[0.32em] text-gold/80">{rsvpCopy.acceptedTitle}</p>
-            <p className="mt-3 text-base leading-7 text-taupe/78">{rsvpCopy.acceptedDescription}</p>
+            <p className="text-sm uppercase tracking-[0.32em] text-gold/80">{rsvpCopy.responsesTitle}</p>
+            <p className="mt-3 text-base leading-7 text-taupe/78">{rsvpCopy.responsesDescription}</p>
             <div className="mt-6 space-y-4">
-              {acceptedWishes.map((entry) => (
+              {responses.map((entry) => (
                 <article key={entry.id} className="rounded-[1.5rem] border border-gold/15 bg-white/78 px-4 py-4 sm:px-5">
-                  <p className="font-display text-2xl text-cocoa">{entry.fullName}</p>
-                  <p className="mt-2 leading-7 text-taupe/78">{entry.message}</p>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span
+                      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] ${
+                        entry.attendanceStatus === "attending"
+                          ? "bg-[#efe3d3] text-[#6c4c36]"
+                          : "bg-[#f2dede] text-[#9a4e4e]"
+                      }`}
+                    >
+                      {entry.attendanceStatus === "attending" ? rsvpCopy.comingLabel : rsvpCopy.notComingLabel}
+                    </span>
+                  </div>
+                  {entry.message ? (
+                    <p className="mt-4 font-display text-2xl leading-9 text-cocoa sm:text-[2rem]">{entry.message}</p>
+                  ) : null}
+                  <p className={`${entry.message ? "mt-4" : "mt-3"} text-base font-medium uppercase tracking-[0.18em] text-taupe/70`}>
+                    {entry.fullName}
+                  </p>
                 </article>
               ))}
             </div>
